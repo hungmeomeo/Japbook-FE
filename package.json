@@ -22,12 +22,14 @@
     "cmdk": "^1.0.0",
     "embla-carousel-react": "^8.0.2",
     "framer-motion": "^11.0.28",
+    "immer": "^10.0.4",
     "lucide-react": "^0.368.0",
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
+    "use-immer": "^0.9.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

@@ -5,17 +5,23 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
+import { useContext } from "react";
+import { FilterDispatch } from "@/context/Context";
 
 const RangeSliderUI = () => {
-  const [val, setVal] = useState([10, 30]);
+  const [val, setVal] = useState([0, 30]);
+  const dispatch = useContext(FilterDispatch)
   return (
     <>
       <RangeSlider
         onChange={newVal => {
           setVal(newVal);
+          dispatch({type: "FilterPrice", priceRange: newVal})
         }}
         aria-label={["min", "max"]}
-        defaultValue={[10, 30]}
+        defaultValue={[0, 30]}
+        min={0}
+        max={30}
       >
         <RangeSliderTrack>
           <RangeSliderFilledTrack />

@@ -1,20 +1,35 @@
 "use client";
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { FilterDispatch } from "@/context/Context";
+import { v4 as uuid } from "uuid";
+
+const list = [
+  "Comedy",
+  "Tragedy",
+  "Drama",
+  "Horror",
+  "Romance",
+  "Fantasy",
+  "Slice of Life",
+  "Shounen",
+  "Shoujo",
+];
 
 export default function Combobox() {
-  const width = "360px";
+  const dispatch = useContext(FilterDispatch);
   const [isOpen, setOpen] = useState(false);
+  const [genreList, setGenreList] = useState(list);
+  const [searchValue, setSearchValue] = useState("");
   return (
     <div className="relative">
       <button
         id="genre-btn"
         onBlur={() => {
           let fn = e => {
-            console.log(e);
             if (e.target.nodeName !== "LI" && e.target.nodeName !== "INPUT") {
-              console.log("You click ", e.target.nodeName);
               setOpen(false);
+              setGenreList(list);
               document.removeEventListener("click", fn);
             }
           };
@@ -26,21 +41,7 @@ export default function Combobox() {
         className={`border-[1px] px-3 py-2 rounded-md text-sm flex items-center justify-between w-full`}
       >
         Choose Your Genre
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-chevron-down h-4 w-4 opacity-50"
-          aria-hidden="true"
-        >
-          <path d="m6 9 6 6 6-6"></path>
-        </svg>
+        <img src="/Chevron Down.png" alt="" />
       </button>
       {isOpen && (
         <ul
@@ -51,47 +52,29 @@ export default function Combobox() {
             placeholder="Search genre"
             type="text"
             className="outline-none px-2 py-3 sticky top-0"
+            value={searchValue}
+            onInput={e => {
+              const searchKey = e.target.value;
+              setSearchValue(searchKey);
+              const newGenreList = list.filter(genre =>
+                genre.toLowerCase().startsWith(searchKey.toLowerCase())
+              );
+              setGenreList(newGenreList);
+            }}
           />
-          <li
-            onClick={() => {
-              console.log("list 1 is clicked");
-            }}
-            className="hover:bg-[#F6F6F6] hover:rounded-md px-4 py-2 z-50"
-          >
-            list1
-          </li>
-          <li
-            onClick={() => {
-              console.log("list 1 is clicked");
-            }}
-            className="hover:bg-[#F6F6F6] hover:rounded-md px-4 py-2"
-          >
-            list1
-          </li>
-          <li
-            onClick={() => {
-              console.log("list 1 is clicked");
-            }}
-            className="hover:bg-[#F6F6F6] hover:rounded-md px-4 py-2"
-          >
-            list1
-          </li>
-          <li
-            onClick={() => {
-              console.log("list 1 is clicked");
-            }}
-            className="hover:bg-[#F6F6F6] hover:rounded-md px-4 py-2"
-          >
-            list1
-          </li>
-          <li
-            onClick={() => {
-              console.log("list 1 is clicked");
-            }}
-            className="hover:bg-[#F6F6F6] hover:rounded-md px-4 py-2"
-          >
-            list1
-          </li>
+          {genreList.map(genre => (
+            <li
+              key={uuid()}
+              className="hover:bg-[#F6F6F6] cursor-pointer hover:rounded-md px-4 py-2"
+              onClick={() => {
+                setGenreList(list);
+                setSearchValue("");
+                dispatch({ type: "FilterGenre", newGenre: genre });
+              }}
+            >
+              {genre}
+            </li>
+          ))}
         </ul>
       )}
     </div>
