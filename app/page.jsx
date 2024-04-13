@@ -1,10 +1,11 @@
 import Card from '@/components/Card';
+import Footer from '@/components/Footer';
 import React from 'react'
 
 const HomePage = () => {
   return (
     <>
-      <section className="xl:px-40 lg:px-24 md:px-10 bg-[#F6F6F6] flex justify-between items-center py-20">
+      <section className="responsive-layout bg-[#F6F6F6] flex justify-between items-center py-20">
         <div>
           <h1 className="text-5xl font-bold">Fresh Arrivals Today</h1>
           <p className="mt-5">Discover Our Newest Collection Today.</p>
@@ -14,7 +15,7 @@ const HomePage = () => {
         </div>
         <img src="/books-homepage.jpg" alt="books-image" className="w-1/2" />
       </section>
-      <section className="xl:px-40 lg:px-24 md:px-10 p-40 flex justify-between gap-10">
+      <section className="responsive-layout p-40 flex justify-between gap-10">
         <div className="w-1/3">
           <div className="rounded-full bg-[#F6F6F6] w-12 h-12 flex justify-center items-center">
             <img src="/shipping.png" alt="" className="w-6" />
@@ -76,7 +77,7 @@ const HomePage = () => {
           alt=""
         />
       </section>
-      <section className="xl:px-40 lg:px-24 md:px-10 flex flex-col items-center py-40">
+      <section className="responsive-layout flex flex-col items-center py-40">
         <div className="flex gap-4">
           <p className="border-2 font-semibold rounded-full px-2">Featured</p>
           <p className="font-semibold text-[#5C5F6A]">Latest</p>
@@ -106,6 +107,7 @@ const HomePage = () => {
           </button>
         </form>
       </section>
+      <Footer bgColor="white"/>
     </>
   );
 }

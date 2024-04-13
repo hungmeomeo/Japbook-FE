@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Footer = () => {
+const Footer = ({bgColor}) => {
   return (
-    <footer className="xl:px-40 lg:px-24 md:px-10 py-20 flex justify-between">
+    <footer className={`xl:px-40 lg:px-24 md:px-10 py-20 flex justify-between bg-[${bgColor}]`}>
       <div className="w-1/4">
         <div className="flex gap-2 font-bold text-xl items-center">
           <img src="/logo-footer.png" alt="" />
