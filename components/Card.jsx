@@ -2,7 +2,7 @@ import React from 'react'
 
 const Card = ({productName, isInStock, price, imgUrl}) => {
   return (
-    <div className="p-2">
+    <div className="p-2 hover:bg-slate-100 hover:rounded-lg cursor-pointer">
       <div className="w-64 h-72 bg-[#F6F6F6] rounded flex justify-center items-center">
         <img src={imgUrl} alt="" className='w-3/4'/>
       </div>

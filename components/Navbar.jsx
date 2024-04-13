@@ -1,4 +1,5 @@
 import React from 'react'
+import {web_link} from '@/config_var'
 
 const Navbar = () => {
   return (
@@ -8,9 +9,11 @@ const Navbar = () => {
         JapBook
       </div>
       <ul className="flex pl-32 font-medium gap-6 grow text-[#5C5F6A]">
-        <li className="cursor-pointer">Home</li>
+        <li className="cursor-pointer">
+          <a href={`${web_link}/`}>Home</a>
+        </li>
         <li className="flex cursor-pointer">
-          Products
+          <a href={`${web_link}/products`}>Products</a>
         </li>
         <li className="cursor-pointer">About</li>
         <li className="cursor-pointer">Contact</li>

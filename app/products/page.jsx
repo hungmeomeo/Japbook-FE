@@ -17,7 +17,7 @@ import Card from "@/components/Card";
 const Products = () => {
   return (
     <>
-      <Navigation path="Products" />
+      <Navigation path={["Ecommerce", "Products"]} />
       <section className="responsive-layout mt-6 flex gap-4">
         <Filter />
         <main className="grow">
