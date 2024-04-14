@@ -1,10 +1,13 @@
 import React from 'react'
+import {web_link} from '@/config_var'
+import { useRouter } from 'next/navigation';
 
-const Card = ({productName, isInStock, price, imgUrl}) => {
+const Card = ({productId, productName, isInStock, price, imgUrl}) => {
+  const router = useRouter()
   return (
-    <div className="p-2 hover:bg-slate-100 hover:rounded-lg cursor-pointer">
+    <div onClick={() => {router.push(`${web_link}/products/${productId}`)}} className="p-2 hover:bg-slate-100 hover:rounded-lg cursor-pointer">
       <div className="w-64 h-72 bg-[#F6F6F6] rounded flex justify-center items-center">
-        <img src={imgUrl} alt="" className='w-3/4'/>
+        <img src={imgUrl} alt="" className='h-full'/>
       </div>
       <h4 className='mt-2'>{productName}</h4>
       <div className="flex items-center gap-2 mt-4">

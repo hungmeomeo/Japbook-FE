@@ -1,11 +1,12 @@
-'use client'
-import Card from '@/components/Card';
-import Footer from '@/components/Footer';
-import {web_link} from '@/config_var'
-import React, { useState } from 'react'
+"use client";
+import Card from "@/components/Card";
+import Footer from "@/components/Footer";
+import { web_link } from "@/config_var";
+import React, { useState } from "react";
+import BookData from "@/fakeData";
 
 const HomePage = () => {
-  const [bookStatus, setBookStatus] = useState("Latest") // Featured | Latest
+  const [bookStatus, setBookStatus] = useState("Latest"); // Featured | Latest
   return (
     <>
       <section className="responsive-layout bg-[#F6F6F6] flex justify-between items-center py-20">
@@ -62,34 +63,32 @@ const HomePage = () => {
         <h2 className="font-semibold text-xl">Best Selling</h2>
         <div className="w-full flex justify-between mt-24">
           <Card
-            productName="Light Novel 1"
-            isInStock={true}
-            price="13.45"
-            imgUrl="https://moyashi-japan.com/cdn/shop/files/81VBD20oT8L._SL1500.jpg?v=1701386975"
+            productId={BookData[0].productId}
+            productName={BookData[0].productName}
+            isInStock={BookData[0].isInStock}
+            price={BookData[0].productPrice}
+            imgUrl={BookData[0].imgUrl}
           />
           <Card
-            productName="Manga 1"
-            isInStock={true}
-            price="9.12"
-            imgUrl={
-              "https://product.hstatic.net/200000343865/product/2_4532de8990964ee586c7252a12e3a8f4_master.jpg"
-            }
+            productId={BookData[1].productId}
+            productName={BookData[1].productName}
+            isInStock={BookData[1].isInStock}
+            price={BookData[1].productPrice}
+            imgUrl={BookData[1].imgUrl}
           />
           <Card
-            productName="Light Novel 2"
-            isInStock={true}
-            price="13.45"
-            imgUrl={
-              "https://m.media-amazon.com/images/I/81+8UiitTuL._AC_UF1000,1000_QL80_.jpg"
-            }
+            productId={BookData[2].productId}
+            productName={BookData[2].productName}
+            isInStock={BookData[2].isInStock}
+            price={BookData[2].productPrice}
+            imgUrl={BookData[2].imgUrl}
           />
           <Card
-            productName="Light Novel 1"
-            isInStock={true}
-            price="13.45"
-            imgUrl={
-              "https://images.booksense.com/images/949/581/9781638581949.jpg"
-            }
+            productId={BookData[3].productId}
+            productName={BookData[3].productName}
+            isInStock={BookData[3].isInStock}
+            price={BookData[3].productPrice}
+            imgUrl={BookData[3].imgUrl}
           />
         </div>
       </section>
@@ -147,36 +146,32 @@ const HomePage = () => {
         </div>
         <div className="w-full flex justify-between mt-10">
           <Card
-            imgUrl={
-              "https://cdn.archonia.com/images/1-68542403-1-1-original1/reprise-of-the-spear-hero-vol-01-light-novel.jpg"
-            }
-            productName="The Reprise of the spear hero"
-            price={12.34}
-            isInStock={true}
+            productId={BookData[4].productId}
+            productName={BookData[4].productName}
+            isInStock={BookData[4].isInStock}
+            price={BookData[4].productPrice}
+            imgUrl={BookData[4].imgUrl}
           />
           <Card
-            imgUrl={
-              "https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&set=key%5Bresolve.format%5D,value%5Bwebp%5D&source=url%5Bhttps://prodimage.images-bn.com/pimages/9780759531048_p0_v3_s600x595.jpg%5D&scale=options%5Blimit%5D,size%5B300x10000%5D&sink=format%5Bwebp%5D"
-            }
-            productName={"Wolk & Spice"}
-            price={9.45}
-            isInStock={true}
+            productId={BookData[5].productId}
+            productName={BookData[5].productName}
+            isInStock={BookData[5].isInStock}
+            price={BookData[5].productPrice}
+            imgUrl={BookData[5].imgUrl}
           />
           <Card
-            imgUrl={
-              "https://mangaplus.shueisha.co.jp/drm/title/100034/title_thumbnail_portrait_list/312829.jpg?key=a0cb42c4bb04186d325b9fa8dd5f4271&duration=86400"
-            }
-            productName={"Jujustu Kaisen"}
-            price={"3.10"}
-            isInStock={true}
+            productId={BookData[6].productId}
+            productName={BookData[6].productName}
+            isInStock={BookData[6].isInStock}
+            price={BookData[6].productPrice}
+            imgUrl={BookData[6].imgUrl}
           />
           <Card
-            imgUrl={
-              "https://store.crunchyroll.com/on/demandware.static/-/Sites-crunchyroll-master-catalog/default/dwf91bd0ab/images/9781974745869_one-piece-manga-volume-106_1.jpg"
-            }
-            productName={"One Piece"}
-            price={"3.14"}
-            isInStock={true}
+            productId={BookData[7].productId}
+            productName={BookData[7].productName}
+            isInStock={BookData[7].isInStock}
+            price={BookData[7].productPrice}
+            imgUrl={BookData[7].imgUrl}
           />
         </div>
       </section>
@@ -201,6 +196,6 @@ const HomePage = () => {
       <Footer bgColor="white" />
     </>
   );
-}
+};
 
-export default HomePage
+export default HomePage;
