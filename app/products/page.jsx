@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import BookData from "@/fakeData"
 import React, {useReducer} from "react";
 import Card from "@/components/Card";
 import {v4 as uuid} from "uuid"
@@ -131,40 +131,12 @@ const Products = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="grid grid-cols-3">
-            <div className="flex justify-center">
-              <Card productName="Light novel2" isInStock={true} price={12.34} />
-            </div>
-            <div className="flex justify-center">
-              <Card productName="Light novel2" isInStock={true} price={12.34} />
-            </div>
-            <div className="flex justify-center">
-              <Card productName="Light novel2" isInStock={true} price={12.34} />
-            </div>
-            <div className="flex justify-center">
-              <Card productName="Light novel2" isInStock={true} price={12.34} />
-            </div>
-            <div className="flex justify-center">
-              <Card productName="Light novel2" isInStock={true} price={12.34} />
-            </div>
-            <div className="flex justify-center">
-              <Card productName="Light novel2" isInStock={true} price={12.34} />
-            </div>
-            <div className="flex justify-center">
-              <Card productName="Light novel2" isInStock={true} price={12.34} />
-            </div>
-            <div className="flex justify-center">
-              <Card productName="Light novel2" isInStock={true} price={12.34} />
-            </div>
-            <div className="flex justify-center">
-              <Card productName="Light novel2" isInStock={true} price={12.34} />
-            </div>
-            <div className="flex justify-center">
-              <Card productName="Light novel2" isInStock={true} price={12.34} />
-            </div>
-            <div className="flex justify-center">
-              <Card productName="Light novel2" isInStock={true} price={12.34} />
-            </div>
+          <div className="grid grid-cols-3 gap-4">
+            {BookData.map(book => (
+              <div key={book.productId} className="flex justify-center">
+                <Card productId={book.productId} productName={book.productName} isInStock={book.isInStock} price={book.productPrice} imgUrl={book.imgUrl} />
+              </div>
+            ))}
           </div>
         </main>
       </section>

@@ -24,7 +24,7 @@ const BookData = [
         productName: "Tensei Shitara Slime",
         productPrice: "11.35",
         isInStock: true,
-        imgUrl: 'https://www.animenewsnetwork.com/images/encyc/A23358-2707941533.1590640645.jpg'
+        imgUrl: 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1606384774i/53831130.jpg'
     },
     {
         productId: 4,
@@ -42,10 +42,10 @@ const BookData = [
     },
     {
         productId: 6,
-        productName: "Mushoku Tensei",
-        productPrice: "13,45",
+        productName: "Classroom of the Elite",
+        productPrice: "12.67",
         isInStock: true,
-        imgUrl: 'https://upload.wikimedia.org/wikipedia/en/f/f6/Mushoku_Tensei_1.png'
+        imgUrl: 'https://i.docln.net/lightnovel/covers/s1028-11db69ed-ae86-4c21-a2ac-cfdda42f5ecc-m.jpg'
     },
     {
         productId: 7,
@@ -94,7 +94,7 @@ const BookData = [
         productName: "Jaku-chara Tomozaki-kun",
         productPrice: "17.12",
         isInStock: true,
-        imgUrl: 'https://static.wikia.nocookie.net/yowa-chara-tomozaki-kun/images/d/db/Vol.1-01.png/revision/latest/scale-to-width-down/1000?cb=20200718042139'
+        imgUrl: 'https://i.redd.it/1dika1jm9tb21.jpg'
     },
     {
         productId: 14,
