@@ -28,7 +28,7 @@ const Sidebar = ({ children, navItem, setNavItem }) => {
           <img src="/Delivery.png" alt="" />
           Address
         </div>
-        <div
+        {/* <div
           onClick={() => {
             setNavItem("Pass");
           }}
@@ -38,7 +38,7 @@ const Sidebar = ({ children, navItem, setNavItem }) => {
         >
           <img src="/Key.png" alt="" />
           Password
-        </div>
+        </div> */}
         <div
           onClick={() => {
             setNavItem("Detail");

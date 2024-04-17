@@ -14,6 +14,7 @@ import { Tag } from "@chakra-ui/react";
 import BookData from "@/fakeData";
 import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
+import Review from "@/components/Review";
 
 const page = ({ params }) => {
   const [qty, setQty] = useState(1);
@@ -126,7 +127,7 @@ const page = ({ params }) => {
             </button>
           </div>
         </section>
-
+        <Review/>
         <section className="my-20">
           <h2 className="font-semibold text-2xl">You might also like</h2>
           <p className="text-gray-600">SIMILAR PRODUCT</p>

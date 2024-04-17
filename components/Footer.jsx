@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = ({bgColor}) => {
   return (
-    <footer className={`xl:px-40 lg:px-24 md:px-10 py-20 flex justify-between bg-[${bgColor}]`}>
+    <footer className={`xl:px-40 lg:px-24 md:px-10 py-20 flex justify-between bg-[#F6F6F6]`}>
       <div className="w-1/4">
         <div className="flex gap-2 font-bold text-xl items-center">
           <img src="/logo-footer.png" alt="" />
@@ -14,7 +14,7 @@ const Footer = ({bgColor}) => {
         </p>
         <div className="flex gap-4 mt-2">
           <img src="/Github.png" alt="" />
-          <img src="Instagram.png" alt="" />
+          <img src="/Instagram.png" alt="" />
           <img src="/Youtube.png" alt="" />
         </div>
       </div>
@@ -59,9 +59,9 @@ const Footer = ({bgColor}) => {
       <div>
         <h4 className="text-[#5C5F6A]">ACCEPTED PAYMENTs</h4>
         <div className="flex gap-2 mt-4">
-          <img src="Mastercard.png" alt="" />
-          <img src="Amex.png" alt="" />
-          <img src="Visa.png" alt="" />
+          <img src="/Mastercard.png" alt="" />
+          <img src="/Amex.png" alt="" />
+          <img src="/Visa.png" alt="" />
         </div>
       </div>
     </footer>

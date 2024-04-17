@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import React from "react";
+import { web_link } from "@/config_var";
 
 const Login = () => {
   return (
@@ -44,7 +45,7 @@ const Login = () => {
         <p className="text-[#5C5F6A] mt-4">
           Don't have an account?{" "}
           <span>
-            <a href="" className="hover:underline">
+            <a href={`${web_link}/register`} className="hover:underline">
               Sign Up
             </a>
           </span>

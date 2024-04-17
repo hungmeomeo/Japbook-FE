@@ -14,9 +14,9 @@ const Profile = () => {
     case "Addr":
       display = <ShippingAddress />;
       break;
-    case "Pass":
-      display = <SetPassword />;
-      break;
+    // case "Pass":
+    //   display = <SetPassword />;
+    //   break;
     case "Detail":
       display = <Detail />;
       break;

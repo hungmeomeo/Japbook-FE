@@ -1,12 +1,28 @@
 "use client";
 import Card from "@/components/Card";
 import Footer from "@/components/Footer";
-import { web_link } from "@/config_var";
-import React, { useState } from "react";
+import { web_link, be_url } from "@/config_var";
+import React, { useState, useEffect } from "react";
 import BookData from "@/fakeData";
+import axios from "axios";
 
 const HomePage = () => {
   const [bookStatus, setBookStatus] = useState("Latest"); // Featured | Latest
+  const [bookList, setBookList] = useState()
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${be_url}/home`)
+        console.log(response)
+        setBookList(response.data)
+      }
+      catch (e) {
+        console.log(e)
+      }
+    }
+    fetchData()
+  }, [])
+  console.log(bookList)
   return (
     <>
       <section className="responsive-layout bg-[#F6F6F6] flex justify-between items-center py-20">
@@ -25,7 +41,7 @@ const HomePage = () => {
             />
           </a>
         </div>
-        <img src="/books-homepage.jpg" alt="books-image" className="w-1/2" />
+        <img src="/welcome_img.jpg" alt="books-image" className="w-1/2" />
       </section>
       <section className="responsive-layout p-40 flex justify-between gap-10">
         <div className="w-1/3">
@@ -62,34 +78,38 @@ const HomePage = () => {
         <h3 className="text-[#5C5F6A] font-medium">SHOP NOW</h3>
         <h2 className="font-semibold text-xl">Best Selling</h2>
         <div className="w-full flex justify-between mt-24">
-          <Card
-            productId={BookData[0].productId}
-            productName={BookData[0].productName}
-            isInStock={BookData[0].isInStock}
-            price={BookData[0].productPrice}
-            imgUrl={BookData[0].imgUrl}
-          />
-          <Card
-            productId={BookData[1].productId}
-            productName={BookData[1].productName}
-            isInStock={BookData[1].isInStock}
-            price={BookData[1].productPrice}
-            imgUrl={BookData[1].imgUrl}
-          />
-          <Card
-            productId={BookData[2].productId}
-            productName={BookData[2].productName}
-            isInStock={BookData[2].isInStock}
-            price={BookData[2].productPrice}
-            imgUrl={BookData[2].imgUrl}
-          />
-          <Card
-            productId={BookData[3].productId}
-            productName={BookData[3].productName}
-            isInStock={BookData[3].isInStock}
-            price={BookData[3].productPrice}
-            imgUrl={BookData[3].imgUrl}
-          />
+          {bookList && (
+            <>
+              <Card
+                productId={bookList[0].id}
+                productName={bookList[0].name}
+                isInStock={bookList[0].status === "InStock" ? true : false}
+                price={bookList[0].price}
+                imgUrl={bookList[0].image}
+              />
+              <Card
+                productId={bookList[1].id}
+                productName={bookList[1].name}
+                isInStock={bookList[1].status === "InStock" ? true : false}
+                price={bookList[1].price}
+                imgUrl={bookList[1].image}
+              />
+              <Card
+                productId={bookList[2].id}
+                productName={bookList[2].name}
+                isInStock={bookList[2].status === "InStock" ? true : false}
+                price={bookList[2].price}
+                imgUrl={bookList[2].image}
+              />
+              <Card
+                productId={bookList[3].id}
+                productName={bookList[3].name}
+                isInStock={bookList[3].status === "InStock" ? true : false}
+                price={bookList[3].price}
+                imgUrl={bookList[3].image}
+              />
+            </>
+          )}
         </div>
       </section>
       <section className="xl:px-40 lg:px-24 md:px-10 flex justify-between bg-[#F6F6F6]">
@@ -145,34 +165,38 @@ const HomePage = () => {
           </p>
         </div>
         <div className="w-full flex justify-between mt-10">
-          <Card
-            productId={BookData[4].productId}
-            productName={BookData[4].productName}
-            isInStock={BookData[4].isInStock}
-            price={BookData[4].productPrice}
-            imgUrl={BookData[4].imgUrl}
-          />
-          <Card
-            productId={BookData[5].productId}
-            productName={BookData[5].productName}
-            isInStock={BookData[5].isInStock}
-            price={BookData[5].productPrice}
-            imgUrl={BookData[5].imgUrl}
-          />
-          <Card
-            productId={BookData[6].productId}
-            productName={BookData[6].productName}
-            isInStock={BookData[6].isInStock}
-            price={BookData[6].productPrice}
-            imgUrl={BookData[6].imgUrl}
-          />
-          <Card
-            productId={BookData[7].productId}
-            productName={BookData[7].productName}
-            isInStock={BookData[7].isInStock}
-            price={BookData[7].productPrice}
-            imgUrl={BookData[7].imgUrl}
-          />
+          {bookList && (
+            <>
+              <Card
+                productId={bookList[4].id}
+                productName={bookList[4].name}
+                isInStock={bookList[4].status === "InStock" ? true : false}
+                price={bookList[4].price}
+                imgUrl={bookList[4].image}
+              />
+              <Card
+                productId={bookList[5].id}
+                productName={bookList[5].name}
+                isInStock={bookList[5].status === "InStock" ? true : false}
+                price={bookList[5].price}
+                imgUrl={bookList[5].image}
+              />
+              <Card
+                productId={bookList[6].id}
+                productName={bookList[6].name}
+                isInStock={bookList[6].status === "InStock" ? true : false}
+                price={bookList[6].price}
+                imgUrl={bookList[6].image}
+              />
+              <Card
+                productId={bookList[7].id}
+                productName={bookList[7].name}
+                isInStock={bookList[7].status === "InStock" ? true : false}
+                price={bookList[7].price}
+                imgUrl={bookList[7].image}
+              />
+            </>
+          )}
         </div>
       </section>
       <section className="xl:px-40 lg:px-24 md:px-10 py-12 bg-[#F6F6F6] flex items-center justify-between">

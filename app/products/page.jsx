@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Filter from "@/components/Filter";
 import Navigation from "@/components/Navigation";
@@ -10,11 +10,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import BookData from "@/fakeData"
-import React, {useReducer} from "react";
+import BookData from "@/fakeData";
+import React, { useReducer, useState } from "react";
 import Card from "@/components/Card";
-import {v4 as uuid} from "uuid"
+import { v4 as uuid } from "uuid";
 import { FilterDispatch } from "@/context/Context";
+import Footer from "@/components/Footer";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { web_link } from "@/config_var";
+import { useSearchParams } from "next/navigation";
 
 const filterReducer = (filter, action) => {
   switch (action.type) {
@@ -22,66 +34,73 @@ const filterReducer = (filter, action) => {
       return {
         genre: [...filter.genre],
         priceRange: [...filter.priceRange],
-        bookType: action.bookType
-      }
+        bookType: action.bookType,
+      };
     }
     case "FilterGenre": {
-      const oldGenreFilter = filter.genre 
+      const oldGenreFilter = filter.genre;
       if (oldGenreFilter.indexOf(action.newGenre) == -1)
-        oldGenreFilter.push(action.newGenre)
+        oldGenreFilter.push(action.newGenre);
       return {
         ...filter,
         priceRange: [...filter.priceRange],
-        genre: [...oldGenreFilter]
-      }
+        genre: [...oldGenreFilter],
+      };
     }
     case "FilterPrice": {
       return {
         ...filter,
         genre: [...filter.genre],
-        priceRange: action.priceRange
-      }
+        priceRange: action.priceRange,
+      };
     }
     case "RemovePriceRange": {
       return {
         ...filter,
         genre: [...filter.genre],
-        priceRange: []
-      }
+        priceRange: [],
+      };
     }
     case "RemoveTag": {
       if (filter.bookType === action.name) {
         return {
           bookType: "",
           genre: [...filter.genre],
-          priceRange: [...filter.priceRange]
-        }
-      }
-      else {
+          priceRange: [...filter.priceRange],
+        };
+      } else {
         return {
           ...filter,
           priceRange: [...filter.priceRange],
-          genre: filter.genre.filter(ele => ele !== action.name)
-        }
+          genre: filter.genre.filter(ele => ele !== action.name),
+        };
       }
     }
-  } 
-}
+  }
+};
+
+const totalProduct = 400;
 
 const Products = () => {
-  const [filter, dispatch] = useReducer(filterReducer, {bookType: "", genre: [], priceRange: []})
-  // console.log(filter)
-  let mergeArray = []
+  const searchParams = useSearchParams();
+  const [filter, dispatch] = useReducer(filterReducer, {
+    bookType: "",
+    genre: [],
+    priceRange: [],
+  });
+  const [sort, setSort] = useState({ kind: "name", order: "asc" }); // Kind: name | price, order: asc | desc
+  const page = parseInt(searchParams.get("page"));
+  console.log(page);
+  let mergeArray = [];
   if (filter.bookType === "") {
-    mergeArray = filter.genre
-  } 
-  else {
-    mergeArray = [filter.bookType].concat(filter.genre)
+    mergeArray = filter.genre;
+  } else {
+    mergeArray = [filter.bookType].concat(filter.genre);
   }
   return (
     <FilterDispatch.Provider value={dispatch}>
       <Navigation path={["Ecommerce", "Products"]} />
-      <section className="responsive-layout mt-6 flex gap-4">
+      <section className="responsive-layout my-10 flex gap-4">
         <Filter />
         <main className="grow">
           <p className="font-semibold">Applied Filters:</p>
@@ -95,7 +114,11 @@ const Products = () => {
                 size="lg"
               >
                 <TagLabel className="text-black">{ele}</TagLabel>
-                <TagCloseButton onClick={() => {dispatch({type: "RemoveTag", name: ele})}}/>
+                <TagCloseButton
+                  onClick={() => {
+                    dispatch({ type: "RemoveTag", name: ele });
+                  }}
+                />
               </Tag>
             ))}
             {filter.priceRange.length > 0 && (
@@ -107,7 +130,11 @@ const Products = () => {
                 size="lg"
               >
                 <TagLabel className="text-black">{`From \$${filter.priceRange[0]} to \$${filter.priceRange[1]}`}</TagLabel>
-                <TagCloseButton onClick={() => {dispatch({type: "RemovePriceRange"})}}/>
+                <TagCloseButton
+                  onClick={() => {
+                    dispatch({ type: "RemovePriceRange" });
+                  }}
+                />
               </Tag>
             )}
           </div>
@@ -115,31 +142,105 @@ const Products = () => {
             <p>Showing x-y of z results</p>
             <Select
               onValueChange={e => {
-                alert(e);
+                switch (e) {
+                  case "name-asc":
+                    setSort({ kind: "name", order: "asc" });
+                    break;
+                  case "name-desc":
+                    setSort({ kind: "name", order: "desc" });
+                    break;
+                  case "price-asc":
+                    setSort({ kind: "price", order: "asc" });
+                    break;
+                  case "price-desc":
+                    setSort({ kind: "price", order: "desc" });
+                    break;
+                }
               }}
             >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="SORT BY" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="name-asc">{"Name (Ascending)"}</SelectItem>
-                <SelectItem value="name-desc">{"Name (Descending)"}</SelectItem>
-                <SelectItem value="price-asc">{"Price (Ascending)"}</SelectItem>
+                <SelectItem value="name-asc">{"Name (A-Z)"}</SelectItem>
+                <SelectItem value="name-desc">{"Name (Z-A)"}</SelectItem>
+                <SelectItem value="price-asc">
+                  {"Price (low - high)"}
+                </SelectItem>
                 <SelectItem value="price-desc">
-                  {"Price (Descending)"}
+                  {"Price (high - low)"}
                 </SelectItem>
               </SelectContent>
             </Select>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
             {BookData.map(book => (
               <div key={book.productId} className="flex justify-center">
-                <Card productId={book.productId} productName={book.productName} isInStock={book.isInStock} price={book.productPrice} imgUrl={book.imgUrl} />
+                <Card
+                  productId={book.productId}
+                  productName={book.productName}
+                  isInStock={book.isInStock}
+                  price={book.productPrice}
+                  imgUrl={book.imgUrl}
+                />
               </div>
             ))}
           </div>
+          <Pagination className="mt-5">
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  href={`${web_link}/products?page=${
+                    page > 1 ? page - 1 : page
+                  }`}
+                />
+              </PaginationItem>
+
+              {page >= 4 && (
+                <>
+                  <PaginationItem>
+                    <PaginationLink href="#">1</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                </>
+              )}
+
+              <PaginationItem>
+                <PaginationLink href="#" isActive>
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">{page + 1}</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">{page + 2}</PaginationLink>
+              </PaginationItem>
+
+              {page < Math.ceil(totalProduct / 12) - 3 && (
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              )}
+              <PaginationItem>
+                <PaginationLink href="#">
+                  {Math.ceil(totalProduct / 12)}
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext
+                  href={`${web_link}/products?page=${
+                    page * 12 > totalProduct ? page : page + 1
+                  }`}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
         </main>
       </section>
+      <Footer bgColor={"#F6F6F6"} />
     </FilterDispatch.Provider>
   );
 };
