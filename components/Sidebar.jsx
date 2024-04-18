@@ -1,8 +1,11 @@
 'use client'
 
+import { handleLogout } from "@/authentication";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Sidebar = ({ children, navItem, setNavItem }) => {
+  const router = useRouter()
   return (
     <div className="responsive-layout flex mt-16 h-[400px]">
       <aside className="flex flex-col gap-4 pr-10 border-r-2 self-stretch justify-center">
@@ -39,7 +42,7 @@ const Sidebar = ({ children, navItem, setNavItem }) => {
           <img src="/Key.png" alt="" />
           Password
         </div> */}
-        <div
+        {/* <div
           onClick={() => {
             setNavItem("Detail");
           }}
@@ -49,10 +52,17 @@ const Sidebar = ({ children, navItem, setNavItem }) => {
         >
           <img src="/ProfileUser.png" alt="" />
           Account Detail
-        </div>
+        </div> */}
         <div
-          onClick={() => {
-            setNavItem("Logout");
+          onClick={async () => {
+            try {
+              const result = await handleLogout()
+              if (result) router.push('/login')
+            }
+            catch(e) {
+              console.log(e)
+            }
+            
           }}
           className={`flex items-center font-medium gap-1 px-10 py-3 cursor-pointer text-[#5C5F6A] ${
             navItem == "Logout" && " bg-[#F6F6F6] rounded-lg text-black"

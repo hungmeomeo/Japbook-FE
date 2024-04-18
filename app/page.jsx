@@ -3,16 +3,18 @@ import Card from "@/components/Card";
 import Footer from "@/components/Footer";
 import { web_link, be_url } from "@/config_var";
 import React, { useState, useEffect } from "react";
-import BookData from "@/fakeData";
 import axios from "axios";
+import { getUserToken } from "@/authentication";
 
 const HomePage = () => {
   const [bookStatus, setBookStatus] = useState("Latest"); // Featured | Latest
   const [bookList, setBookList] = useState()
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${be_url}/home`)
+    const fetchData = async () => {   
+      try { 
+        const userToken = await getUserToken()
+        console.log(userToken)  
+        const response = await axios.get(`${be_url}/home`);
         console.log(response)
         setBookList(response.data)
       }

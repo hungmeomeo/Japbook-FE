@@ -1,46 +1,74 @@
-'use client'
+"use client";
 
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
+import { Input } from "@chakra-ui/react";
+import axios from "axios";
+import { be_url } from "@/config_var";
+import { getUserId, getUserToken } from "@/authentication";
 
-const SummaryProduct = () => {
-  const [qty, setQty] = useState(1);
+const SummaryProduct = ({ productInfo, updateCart}) => {
+  const [qty, setQty] = useState(productInfo.quantity);
+  useEffect(() => {
+    const updateCartProduct = async () => {
+      try {
+        const userToken = await getUserToken();
+        const userId = await getUserId();
+        const updateProductInCart = await axios.put(
+          `${be_url}/user/${userId}/${productInfo.product._id}/update`,
+          { quantity: qty }
+        );
+        updateCart(old => (old + 1) % 2)
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    updateCartProduct()
+  },[qty])
+  console.log(productInfo)
   return (
-    <div className="flex items-center">
-      <div className="w-16 h-16 rounded-md bg-[#F6F6F6]">
-        <img src="#" alt="" />
+    <div className="flex items-center justify-between">
+      <div className="flex items-center">
+        <div className="w-16 h-16 rounded-md bg-[#F6F6F6] flex justify-center">
+          <img src={productInfo.product.image} alt="" className="object-fit" />
+        </div>
+        <p className="font-semibold text-lg ml-10 w-[180px] truncate text-ellipsis">
+          {productInfo.product.name}
+        </p>
       </div>
-      <p className="font-semibold text-lg ml-10">Product name</p>
-      <p className="font-semibold ml-28">$123*22</p>
-      <div className="flex border-2 w-fit items-center rounded-md ml-6">
-        <button
-          onClick={() => {
-            setQty(old => (old - 1 >= 1 ? old - 1 : old));
-          }}
-          className="px-4 py-2 rounded-s-sm active:bg-gray-300"
-        >
-          -
-        </button>
-        <input
-          className="outline-none w-6"
-          name="qty"
+      <div className="flex items-center">
+        <p className="font-semibold ml-28">
+          {productInfo.product.price * productInfo.quantity}
+        </p>
+        <Input
+          variant="flushed"
           type="number"
           value={qty}
-          onChange={e => {
+          onInput={async e => {
             setQty(Number(e.target.value));
           }}
+          onClick={e => {
+            e.target.select();
+          }}
+          width={"48px"}
+          ml={"12px"}
         />
         <button
-          onClick={() => {
-            setQty(old => old + 1);
+          onClick={async e => {
+            try {
+              const uid = await getUserId()
+              const deleteProductInCart = await axios.delete(`${be_url}/user/${uid}/${productInfo.product._id}`)
+              // console.log("You delete this product ", productInfo.product)
+              updateCart(old => (old + 1) % 2)
+            }
+            catch (e) {
+              console.log(e)
+            }
           }}
-          className="px-4 py-2 rounded-e-sm active:bg-gray-300"
+          className="ml-6 bg-[#F6F6F6] rounded-md w-10 h-10 flex items-center justify-center active:bg-gray-300 active:rounded-md"
         >
-          +
+          <img src="/close-icon.png" alt="" />
         </button>
       </div>
-      <button className="ml-6 bg-[#F6F6F6] rounded-md w-10 h-10 flex items-center justify-center active:bg-gray-300 active:rounded-md">
-        <img src="/close-icon.png" alt="" />
-      </button>
     </div>
   );
 };

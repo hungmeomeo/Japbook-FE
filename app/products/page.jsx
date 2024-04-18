@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import BookData from "@/fakeData";
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Card from "@/components/Card";
 import { v4 as uuid } from "uuid";
 import { FilterDispatch } from "@/context/Context";
@@ -25,8 +25,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { web_link } from "@/config_var";
+import { be_url, web_link } from "@/config_var";
 import { useSearchParams } from "next/navigation";
+import axios from "axios";
 
 const filterReducer = (filter, action) => {
   switch (action.type) {
@@ -79,7 +80,7 @@ const filterReducer = (filter, action) => {
   }
 };
 
-const totalProduct = 400;
+const totalProduct = 84;
 
 const Products = () => {
   const searchParams = useSearchParams();
@@ -89,7 +90,10 @@ const Products = () => {
     priceRange: [],
   });
   const [sort, setSort] = useState({ kind: "name", order: "asc" }); // Kind: name | price, order: asc | desc
+  const [productList, setProductList] = useState()
+  const productPerPage = 12
   const page = parseInt(searchParams.get("page"));
+  const finalPage = Math.ceil(totalProduct/productPerPage)
   console.log(page);
   let mergeArray = [];
   if (filter.bookType === "") {
@@ -97,9 +101,22 @@ const Products = () => {
   } else {
     mergeArray = [filter.bookType].concat(filter.genre);
   }
+
+  useEffect(() => {
+    const getAllProducts = async () => {
+      try {
+        const fetchAllProducts = await axios.get(`${be_url}/`)
+        setProductList(fetchAllProducts.data)
+      } catch(e) {
+        console.log(e)
+      }
+    }
+    getAllProducts()
+  }, [])
+
   return (
     <FilterDispatch.Provider value={dispatch}>
-      <Navigation path={["Ecommerce", "Products"]} />
+      <Navigation path={["Ecommerce", "Products"]} bgColor={"#F6F6F6"} />
       <section className="responsive-layout my-10 flex gap-4">
         <Filter />
         <main className="grow">
@@ -174,14 +191,14 @@ const Products = () => {
             </Select>
           </div>
           <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
-            {BookData.map(book => (
-              <div key={book.productId} className="flex justify-center">
+            {productList && productList.map(book => (
+              <div key={uuid()} className="flex justify-center">
                 <Card
-                  productId={book.productId}
-                  productName={book.productName}
-                  isInStock={book.isInStock}
-                  price={book.productPrice}
-                  imgUrl={book.imgUrl}
+                  productId={book.id}
+                  productName={book.name}
+                  isInStock={book.status}
+                  price={book.price}
+                  imgUrl={book.image}
                 />
               </div>
             ))}
@@ -195,40 +212,139 @@ const Products = () => {
                   }`}
                 />
               </PaginationItem>
-
-              {page >= 4 && (
-                <>
-                  <PaginationItem>
-                    <PaginationLink href="#">1</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationEllipsis />
-                  </PaginationItem>
-                </>
-              )}
-
+              {/*Always have first page*/}
               <PaginationItem>
-                <PaginationLink href="#" isActive>
-                  {page}
+                <PaginationLink
+                  href={`${web_link}/products?page=1`}
+                  isActive={page == 1 ? true : false}
+                >
+                  1
                 </PaginationLink>
               </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">{page + 1}</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">{page + 2}</PaginationLink>
-              </PaginationItem>
 
-              {page < Math.ceil(totalProduct / 12) - 3 && (
+              {/*First ellipsis appears only when current page is greater than or equal to 4 */}
+              {page >= 4 && finalPage > 5 && (
                 <PaginationItem>
                   <PaginationEllipsis />
                 </PaginationItem>
               )}
-              <PaginationItem>
-                <PaginationLink href="#">
-                  {Math.ceil(totalProduct / 12)}
-                </PaginationLink>
-              </PaginationItem>
+
+              {((page < 4 && finalPage > 5) || (finalPage <=5)) && (
+                <>
+                  {finalPage > 2 && (
+                    <PaginationItem>
+                      <PaginationLink
+                        href={`${web_link}/products?page=2`}
+                        isActive={page == 2 ? true : false}
+                      >
+                        2
+                      </PaginationLink>
+                    </PaginationItem>
+                  )}
+                  {finalPage > 3 && (
+                    <PaginationItem>
+                      <PaginationLink
+                        href={`${web_link}/products?page=3`}
+                        isActive={page == 3 ? true : false}
+                      >
+                        3
+                      </PaginationLink>
+                    </PaginationItem>
+                  )}
+                  {finalPage > 4 && (
+                    <PaginationItem>
+                      <PaginationLink
+                        href={`${web_link}/products?page=4`}
+                        isActive={page == 4 ? true : false}
+                      >
+                        4
+                      </PaginationLink>
+                    </PaginationItem>
+                  )}
+                </>
+              )}
+              {page + 2 < finalPage && finalPage > 5 && (
+                <>
+                  {page >= 4 && (
+                    <PaginationItem>
+                      <PaginationLink
+                        href={`${web_link}/products?page=${page - 1}`}
+                      >
+                        {page - 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  )}
+                  {page >= 4 && (
+                    <PaginationItem>
+                      <PaginationLink
+                        href={`${web_link}/products?page=${page}`}
+                        isActive
+                      >
+                        {page}
+                      </PaginationLink>
+                    </PaginationItem>
+                  )}
+                  {page >= 4 && (
+                    <PaginationItem>
+                      <PaginationLink
+                        href={`${web_link}/products?page=${page + 1}`}
+                      >
+                        {page + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  )}
+                </>
+              )}
+
+              {finalPage - 3 > 1 && page + 2 >= finalPage && finalPage > 5 && (
+                <>
+                  <PaginationItem>
+                    <PaginationLink
+                      href={`${web_link}/products?page=${finalPage - 3}`}
+                      isActive={page == finalPage - 3 ? true : false}
+                    >
+                      {finalPage - 3}
+                    </PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink
+                      href={`${web_link}/products?page=${finalPage - 2}`}
+                      isActive={page == finalPage - 2 ? true : false}
+                    >
+                      {finalPage - 2}
+                    </PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink
+                      href={`${web_link}/products?page=${finalPage - 1}`}
+                      isActive={page == finalPage - 1 ? true : false}
+                    >
+                      {finalPage - 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                </>
+              )}
+
+              {/*Second ellipsis appears only when current page + 3 is smaller than the final page */}
+              {page + 2 < finalPage && finalPage > 5 && (
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              )}
+
+              {/*final page only exist if products cannot fit inside one page*/}
+              {finalPage > 1 && (
+                <PaginationItem>
+                  <PaginationLink
+                    href={`${web_link}/products?page=${finalPage}`}
+                    isActive={page == finalPage ? true : false}
+                  >
+                    {finalPage}
+                  </PaginationLink>
+                </PaginationItem>
+              )}
+
+              {/* Next Button */}
               <PaginationItem>
                 <PaginationNext
                   href={`${web_link}/products?page=${

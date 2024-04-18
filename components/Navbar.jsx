@@ -3,15 +3,6 @@
 import React, { useState } from "react";
 import { web_link } from "@/config_var";
 import { useRouter } from "next/navigation";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 
 const Navbar = () => {
   const router = useRouter();
@@ -28,7 +19,7 @@ const Navbar = () => {
           <a href={`${web_link}/`}>Home</a>
         </li>
         <li className="flex cursor-pointer">
-          <a href={`${web_link}/products`}>Products</a>
+          <a href={`${web_link}/products?page=1`}>Products</a>
         </li>
         <li className="cursor-pointer">About</li>
         <li className="cursor-pointer">Contact</li>

@@ -18,10 +18,11 @@ const Filter = () => {
   const dispatch = useContext(FilterDispatch)
   return (
     <div className="w-1/4 border-2 p-4 rounded-md flex flex-col gap-4 h-fit sticky top-5">
-      <div>
+      {/* <div>
         <p className="font-semibold mb-2">Book Type</p>
         <Select
           onValueChange={selectVal => dispatch({ type: "FilterBookType", bookType: selectVal })}
+          className="outline-none"
         >
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Both" defaultValue="Both" />
@@ -32,7 +33,7 @@ const Filter = () => {
             <SelectItem value="Both">Both</SelectItem>
           </SelectContent>
         </Select>
-      </div>
+      </div> */}
       <div>
         <p className="font-semibold mb-2">Genre</p>
         <Combobox />

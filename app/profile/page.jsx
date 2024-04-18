@@ -17,9 +17,9 @@ const Profile = () => {
     // case "Pass":
     //   display = <SetPassword />;
     //   break;
-    case "Detail":
-      display = <Detail />;
-      break;
+    // case "Detail":
+    //   display = <Detail />;
+    //   break;
   }
   return (
     <>

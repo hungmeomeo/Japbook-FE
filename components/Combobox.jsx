@@ -1,26 +1,38 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState, useContext } from "react";
 import { FilterDispatch } from "@/context/Context";
 import { v4 as uuid } from "uuid";
+import axios from "axios";
+import { be_url } from "@/config_var";
 
-const list = [
-  "Comedy",
-  "Tragedy",
-  "Drama",
-  "Horror",
-  "Romance",
-  "Fantasy",
-  "Slice of Life",
-  "Shounen",
-  "Shoujo",
-];
+// const list = [
+//   "Comedy",
+//   "Tragedy",
+//   "Drama",
+//   "Horror",
+//   "Romance",
+//   "Fantasy",
+//   "Slice of Life",
+//   "Shounen",
+//   "Shoujo",
+// ];
 
 export default function Combobox() {
   const dispatch = useContext(FilterDispatch);
   const [isOpen, setOpen] = useState(false);
-  const [genreList, setGenreList] = useState(list);
+  const [list, setList] = useState()
+  const [genreList, setGenreList] = useState();
   const [searchValue, setSearchValue] = useState("");
+  useEffect(() => {
+    const createGenreList = async () => {
+      const fetchList = await axios.get(`${be_url}/genre`)
+      console.log(fetchList.data)
+      setList(fetchList.data)
+      setGenreList(list)
+    }
+    createGenreList()
+  }, [])
   return (
     <div className="relative">
       <button
@@ -62,7 +74,7 @@ export default function Combobox() {
               setGenreList(newGenreList);
             }}
           />
-          {genreList.map(genre => (
+          {genreList && genreList.map(genre => (
             <li
               key={uuid()}
               className="hover:bg-[#F6F6F6] cursor-pointer hover:rounded-md px-4 py-2"

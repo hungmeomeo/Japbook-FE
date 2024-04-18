@@ -35,6 +35,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@iconify/tailwind": "^0.1.4",
     "@types/node": "20.12.7",
     "@types/react": "18.2.77",
     "autoprefixer": "^10.0.1",
