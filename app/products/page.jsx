@@ -159,7 +159,7 @@ const Products = () => {
                   <Card
                     productId={book.id}
                     productName={book.name}
-                    isInStock={book.status}
+                    isInStock={book.status == "InStock" ? true : false}
                     price={book.price}
                     imgUrl={book.image}
                   />

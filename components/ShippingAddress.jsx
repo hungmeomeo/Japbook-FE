@@ -7,12 +7,14 @@ import {
   FormErrorMessage,
   FormHelperText,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { be_url } from "@/config_var";
 import { getUserId } from "@/authentication";
 
 const ShippingAddress = () => {
+  const toast = useToast()
   const [shippingForm, setShippingForm] = useState({
     address: "",
     city: "",
@@ -53,6 +55,13 @@ const ShippingAddress = () => {
               ward: shippingForm.ward,
               ship_phone: shippingForm.phone
             })
+            toast({
+              title: "Shipping Address updated",
+              description: "You have updated your shipping address",
+              status: "success",
+              duration: 1000,
+              isClosable: true,
+            });
           } catch (e) {
             console.log(e);
           }

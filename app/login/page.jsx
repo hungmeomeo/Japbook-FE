@@ -6,9 +6,10 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { handleLogin } from "@/authentication";
 import { web_link } from "@/config_var";
-import Navbar from "@/components/Navbar";
+import { useToast } from "@chakra-ui/react";
 
 const Login = () => {
+  const toast = useToast()
   const [loginForm, setLoginForm] = useState()
   const [showPwd, setShowPwd] = useState(false);
   const router = useRouter()
@@ -29,8 +30,18 @@ const Login = () => {
             className="w-full flex flex-col grow"
             onSubmit={async e => {
               e.preventDefault();
+              try {
               const isLoggedIn = await handleLogin(loginForm);
               if (isLoggedIn) router.push("/");
+              } catch (e) {
+                toast({
+                  title: "Incorrect email or password",
+                  description: "Please check your account",
+                  status: "error",
+                  duration: 1000,
+                  isClosable: true,
+                });
+              }
             }}
           >
             <label htmlFor="email" className="mt-4">

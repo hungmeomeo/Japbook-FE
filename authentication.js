@@ -3,8 +3,6 @@ import { cookies } from "next/headers"
 import axios from "axios"
 import { be_url } from "./config_var"
 
-
-
 const handleLogin = async (loginForm) => {
     const cookieStore = cookies()
     try {
@@ -12,6 +10,7 @@ const handleLogin = async (loginForm) => {
             email: loginForm.email,
             password: loginForm.password
         })
+        console.log(sendLogin.data)
         cookieStore.set("userToken", sendLogin.data.token)
         cookieStore.set("userId", sendLogin.data.userid)
         return true

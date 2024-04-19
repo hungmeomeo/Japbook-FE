@@ -17,7 +17,7 @@ const Card = ({productId, productName, isInStock, price, imgUrl}) => {
       <h4 className="mt-2 w-full overflow-hidden whitespace-nowrap text-ellipsis">
         {productName}
       </h4>
-      <div className="flex items-center gap-2 mt-4">
+      <div className="flex items-center gap-2 mt-2">
         <p className="text-xs font-semibold border-2 rounded-full px-2 py-1">
           {isInStock ? "IN STOCK" : "OUT STOCK"}
         </p>
