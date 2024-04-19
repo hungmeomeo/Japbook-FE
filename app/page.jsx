@@ -84,7 +84,7 @@ const HomePage = () => {
       <section className="responsive-layout pb-16 flex flex-col items-center">
         <h3 className="text-[#5C5F6A] font-medium">SHOP NOW</h3>
         <h2 className="font-semibold text-xl">Best Selling</h2>
-        <div className="w-full flex flex-col justify-between items-center mt-10 gap-10 md:justify-center md:mt-24 md:flex md:flex-row md:flex-wrap">
+        <div className="responsive-card-display">
           {bookList && (
             <>
               <Card
@@ -171,7 +171,7 @@ const HomePage = () => {
             Latest
           </p>
         </div>
-        <div className="w-full flex flex-col justify-between items-center mt-10 gap-10 md:justify-center md:mt-24 md:flex md:flex-row md:flex-wrap">
+        <div className="responsive-card-display">
           {bookList && (
             <>
               <Card

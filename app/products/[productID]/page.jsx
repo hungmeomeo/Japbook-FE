@@ -163,7 +163,7 @@ const page = ({ params }) => {
         <section className="my-20">
           <h2 className="font-semibold text-2xl">You might also like</h2>
           <p className="text-gray-600">SIMILAR PRODUCT</p>
-          <div className="w-full flex flex-col justify-between items-center mt-10 gap-10 md:justify-center md:mt-24 md:flex md:flex-row md:flex-wrap">
+          <div className="responsive-card-display">
             {randBook &&
               [1, 4, 6, 3].map(idx => (
                 <Card

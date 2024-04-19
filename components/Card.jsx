@@ -9,7 +9,7 @@ const Card = ({productId, productName, isInStock, price, imgUrl}) => {
       onClick={() => {
         router.push(`${web_link}/products/${productId}`);
       }}
-      className="p-2 hover:bg-slate-100 hover:rounded-lg w-[240px] h-[320px] xl:w-[300px] xl:h-[400px]"
+      className="p-2 hover:bg-slate-100 hover:rounded-lg w-[200px] h-[280px] xl:w-[240px] xl:h-[336px] 2xl:w-[300px] 2xl:h-[420px]"
     >
       <div className="w-full h-3/4 bg-[#F6F6F6] rounded">
         <img src={imgUrl} alt="" className="h-full mx-auto" />
