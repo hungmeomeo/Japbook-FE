@@ -55,7 +55,7 @@ const Products = () => {
         const fetchFilterProducts = await axios.get(
           `${be_url}/filterProducts?name=${filter.name}&price_start=${filter.priceRange[0]}&price_end=${filter.priceRange[1]}&genre_type=${filter.genre}&order=${sort.order}`
         );
-        console.log(fetchFilterProducts);
+        // console.log(fetchFilterProducts);
         setProductList(fetchFilterProducts.data);
       } catch (e) {
         console.log(e);
