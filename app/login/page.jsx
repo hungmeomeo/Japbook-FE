@@ -30,6 +30,7 @@ const Login = () => {
             className="w-full flex flex-col grow"
             onSubmit={async e => {
               e.preventDefault();
+              console.log("Submit login form to backend")
               try {
               const isLoggedIn = await handleLogin(loginForm);
               if (isLoggedIn) router.push("/");
