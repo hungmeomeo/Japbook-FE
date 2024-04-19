@@ -2,11 +2,14 @@
 import Card from "@/components/Card";
 import Footer from "@/components/Footer";
 import { web_link, be_url } from "@/config_var";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { getUserToken } from "@/authentication";
+import { UserIdContext } from "@/context/Context";
 
 const HomePage = () => {
+  const uid = useContext(UserIdContext)
+  console.log(uid)
   const [bookStatus, setBookStatus] = useState("Latest"); // Featured | Latest
   const [bookList, setBookList] = useState();
   const [mail, setMail] = useState("");

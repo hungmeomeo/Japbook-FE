@@ -5,6 +5,7 @@ import { web_link } from "@/config_var";
 import { useRouter } from "next/navigation";
 import { getUserId } from "@/authentication";
 import { FilterDispatch } from "@/context/Context";
+import Cookies from "js-cookie";
 
 const Navbar = () => {
   const setBookFilter = useContext(FilterDispatch)
@@ -50,7 +51,7 @@ const Navbar = () => {
           </form>
           <div
             onClick={async () => {
-              const userId = await getUserId();
+              const userId = Cookies.get("userId")
               if (userId) router.push("/cart");
               else router.push("/login");
             }}
@@ -60,7 +61,7 @@ const Navbar = () => {
           </div>
           <div
             onClick={async () => {
-              const userId = await getUserId();
+              const userId = Cookies.get("userId");
               if (userId) router.push("/profile");
               else router.push("/login");
             }}
@@ -71,7 +72,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className="lg:hidden" onClick={() => setShowNav(old => !old)}>
-        <img src="burger-menu.png" alt="" width={"24px"} />
+        <img src="/burger-menu.png" alt="" width={"24px"} />
       </div>
       <div
         className={`absolute z-50 right-0 bg-white top-[84px] w-full lg:hidden xl:hidden ${
@@ -114,7 +115,7 @@ const Navbar = () => {
             </form>
             <div
               onClick={async () => {
-                const userId = await getUserId();
+                const userId = Cookies.get("userId");
                 if (userId) router.push("/cart");
                 else router.push("/login");
                 setShowNav(false)
@@ -125,7 +126,7 @@ const Navbar = () => {
             </div>
             <div
               onClick={async () => {
-                const userId = await getUserId();
+                const userId = Cookies.get("userId");
                 if (userId) router.push("/profile");
                 else router.push("/login");
                 setShowNav(false);

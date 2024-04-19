@@ -4,9 +4,10 @@ import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { handleLogin } from "@/authentication";
-import { web_link } from "@/config_var";
+import { be_url, web_link } from "@/config_var";
+import Cookies from "js-cookie";
 import { useToast } from "@chakra-ui/react";
+import axios from "axios";
 
 const Login = () => {
   const toast = useToast();
@@ -33,10 +34,15 @@ const Login = () => {
               console.log("Submit login form to backend");
               try {
                 console.log("inside try block")
-                const isLoggedIn = await handleLogin(loginForm);
-                console.log(isLoggedIn)
-                if (isLoggedIn) router.push("/");
+                const sendLogin = await axios.post(`${be_url}/auth/login`, {
+                  email: loginForm.email,
+                  password: loginForm.password,
+                });
+                console.log(sendLogin.data.userid)
+                Cookies.set("userId", sendLogin.data.userid)
+                router.push('/')
               } catch (e) {
+                console.log(e)
                 toast({
                   title: "Incorrect email or password",
                   description: "Please check your account",

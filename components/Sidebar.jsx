@@ -2,6 +2,7 @@
 
 import { handleLogout } from "@/authentication";
 import { Divider } from "@chakra-ui/react";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -57,8 +58,8 @@ const Sidebar = ({ children, navItem, setNavItem }) => {
         <div
           onClick={async () => {
             try {
-              const result = await handleLogout()
-              if (result) router.push('/login')
+              Cookies.remove("userId")
+              if (!Cookies.get("userId")) router.push('/login')
             }
             catch(e) {
               console.log(e)

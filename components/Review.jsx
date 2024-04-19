@@ -1,11 +1,12 @@
 import { Divider, useToast } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import ReactStars from "react-stars";
 import { Textarea } from "@chakra-ui/react";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
 import { be_url } from "@/config_var";
 import { getUserId } from "@/authentication";
+import Cookies from "js-cookie";
 
 const Review = ({ bookReviews, bookInfo, setReloadPage }) => {
   const toast = useToast()
@@ -13,11 +14,10 @@ const Review = ({ bookReviews, bookInfo, setReloadPage }) => {
     comment: "",
     rating: 0,
   });
-  console.log("Book: ", bookInfo)
+  // console.log("Book: ", bookInfo)
   const postReview = async () => {
     try {
-      const uid = await getUserId();
-      console.log(uid)
+      const uid = Cookies.get("userId")
       const putReview = await axios.post(
         `${be_url}/review/${bookInfo._id}/${uid}`,
         {
@@ -27,6 +27,7 @@ const Review = ({ bookReviews, bookInfo, setReloadPage }) => {
       );
       console.log(putReview);
     } catch (e) {
+      console.log(e)
       toast({
         title: "You are not signed in",
         description: "You need to log in to leave a review",

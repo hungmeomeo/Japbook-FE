@@ -13,6 +13,7 @@ import { be_url, web_link } from "@/config_var";
 import { getUserId } from "@/authentication";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import Cookies from "js-cookie";
 
 const Cart = () => {
   // cart or ship
@@ -41,7 +42,7 @@ const Cart = () => {
 
     const getCustomerInfo = async () => {
       try {
-        const uid = await getUserId();
+        const uid = Cookies.get("userId")
         const fetchCustomerInfo = await axios.get(`${be_url}/user/${uid}/shipping`)
         console.log(fetchCustomerInfo.data)
         fetchCustomerInfo.data.length && setCustomerInfo(fetchCustomerInfo.data[0])

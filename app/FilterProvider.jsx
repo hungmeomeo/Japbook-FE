@@ -1,7 +1,12 @@
-'use client'
+"use client";
 
-import React, { useReducer } from "react";
-import { FilterDispatch, FilterState } from "@/context/Context";
+import React, { useReducer, useState } from "react";
+import {
+  FilterDispatch,
+  FilterState,
+  UserIdContext,
+  SetUidContext,
+} from "@/context/Context";
 
 const filterReducer = (filter, action) => {
   switch (action.type) {
@@ -52,12 +57,12 @@ const filterReducer = (filter, action) => {
       }
     }
     case "SearchBookName": {
-        console.log("Inside dispatch SearchBookName")
+      console.log("Inside dispatch SearchBookName");
       return {
         genre: [...filter.genre],
         priceRange: [...filter.priceRange],
         bookType: action.bookType,
-        name: action.bookName
+        name: action.bookName,
       };
     }
   }
@@ -69,10 +74,15 @@ const FilterProvider = ({ children }) => {
     genre: [],
     priceRange: [],
   });
+  const [userId, setUserId] = useState();
   return (
-    <FilterDispatch.Provider value={dispatch}>
-      <FilterState.Provider value={filter}>{children}</FilterState.Provider>
-    </FilterDispatch.Provider>
+    <UserIdContext.Provider value={userId}>
+      <SetUidContext.Provider value={setUserId}>
+        <FilterDispatch.Provider value={dispatch}>
+          <FilterState.Provider value={filter}>{children}</FilterState.Provider>
+        </FilterDispatch.Provider>
+      </SetUidContext.Provider>
+    </UserIdContext.Provider>
   );
 };
 
