@@ -25,7 +25,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { be_url, web_link } from "@/config_var";
-import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -33,7 +32,6 @@ const totalProduct = 84;
 
 const Products = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const filter = useContext(FilterState);
   const dispatch = useContext(FilterDispatch)
   const [page, setPage] = useState(3);
