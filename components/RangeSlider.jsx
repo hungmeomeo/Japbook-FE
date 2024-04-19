@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { FilterDispatch } from "@/context/Context";
 
 const RangeSliderUI = () => {
-  const [val, setVal] = useState([0, 30]);
+  const [val, setVal] = useState([0, 200000]);
   const dispatch = useContext(FilterDispatch)
   return (
     <>
@@ -19,9 +19,9 @@ const RangeSliderUI = () => {
           dispatch({type: "FilterPrice", priceRange: newVal})
         }}
         aria-label={["min", "max"]}
-        defaultValue={[0, 30]}
+        defaultValue={[0, 200000]}
         min={0}
-        max={30}
+        max={200000}
       >
         <RangeSliderTrack>
           <RangeSliderFilledTrack />
@@ -30,8 +30,8 @@ const RangeSliderUI = () => {
         <RangeSliderThumb index={1} className="z-0" />
       </RangeSlider>
       <div className="flex justify-between">
-        <p>${val[0]}</p>
-        <p>${val[1]}</p>
+        <p>{val[0]} đ</p>
+        <p>{val[1]} đ</p>
       </div>
     </>
   );

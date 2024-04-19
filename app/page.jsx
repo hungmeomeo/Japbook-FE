@@ -13,9 +13,7 @@ const HomePage = () => {
     const fetchData = async () => {   
       try { 
         const userToken = await getUserToken()
-        console.log(userToken)  
         const response = await axios.get(`${be_url}/home`);
-        console.log(response)
         setBookList(response.data)
       }
       catch (e) {
@@ -24,13 +22,16 @@ const HomePage = () => {
     }
     fetchData()
   }, [])
-  console.log(bookList)
   return (
     <>
-      <section className="responsive-layout bg-[#F6F6F6] flex justify-between items-center py-20">
-        <div>
-          <h1 className="text-5xl font-bold">Fresh Arrivals Today</h1>
-          <p className="mt-5">Discover Our Newest Collection Today.</p>
+      <section className="responsive-layout bg-[url('/welcome_img.jpg')] py-10 bg-cover md:bg-none md:bg-[#F6F6F6] flex md:justify-between md:items-center md:py-20">
+        <div className="brightness-100">
+          <h1 className="text-5xl font-bold text-black">
+            Fresh Arrivals Today
+          </h1>
+          <p className="mt-5 font-medium">
+            Discover Our Newest Collection Today.
+          </p>
           <a
             href={`${web_link}/products`}
             className="group bg-black text-white flex px-6 py-2 rounded-md mt-28 w-fit"
@@ -43,9 +44,13 @@ const HomePage = () => {
             />
           </a>
         </div>
-        <img src="/welcome_img.jpg" alt="books-image" className="w-1/2" />
+        <img
+          src="/welcome_img.jpg"
+          alt="books-image"
+          className="w-1/2 hidden md:inline-block"
+        />
       </section>
-      <section className="responsive-layout p-40 flex justify-between gap-10">
+      <section className="responsive-layout flex flex-col items-center py-10 md:py-20 md:flex md:flex-row xl:p-40 md:justify-between gap-10">
         <div className="w-1/3">
           <div className="rounded-full bg-[#F6F6F6] w-12 h-12 flex justify-center items-center">
             <img src="/shipping.png" alt="" className="w-6" />
@@ -76,10 +81,10 @@ const HomePage = () => {
           </p>
         </div>
       </section>
-      <section className="xl:px-40 lg:px-24 md:px-10 pb-16 flex flex-col items-center">
+      <section className="responsive-layout pb-16 flex flex-col items-center">
         <h3 className="text-[#5C5F6A] font-medium">SHOP NOW</h3>
         <h2 className="font-semibold text-xl">Best Selling</h2>
-        <div className="w-full flex justify-between mt-24">
+        <div className="w-full flex flex-col justify-between items-center mt-10 gap-10 md:justify-center md:mt-24 md:flex md:flex-row md:flex-wrap">
           {bookList && (
             <>
               <Card
@@ -114,7 +119,7 @@ const HomePage = () => {
           )}
         </div>
       </section>
-      <section className="xl:px-40 lg:px-24 md:px-10 flex justify-between bg-[#F6F6F6]">
+      <section className="responsive-layout flex justify-between bg-[#F6F6F6]">
         <div className="my-16">
           <h2 className="font-bold text-2xl">Browse Our Fashion Paradise</h2>
           <p className="text-[#5C5F6A] mt-2 mb-7">
@@ -166,7 +171,7 @@ const HomePage = () => {
             Latest
           </p>
         </div>
-        <div className="w-full flex justify-between mt-10">
+        <div className="w-full flex flex-col justify-between items-center mt-10 gap-10 md:justify-center md:mt-24 md:flex md:flex-row md:flex-wrap">
           {bookList && (
             <>
               <Card
@@ -201,7 +206,7 @@ const HomePage = () => {
           )}
         </div>
       </section>
-      <section className="xl:px-40 lg:px-24 md:px-10 py-12 bg-[#F6F6F6] flex items-center justify-between">
+      <section className="responsive-layout py-12 bg-[#F6F6F6] flex items-center justify-between">
         <div>
           <h2 className="font-bold text-2xl">Join Our Newsletter</h2>
           <p className="text-[#5C5F6A] mt-4">

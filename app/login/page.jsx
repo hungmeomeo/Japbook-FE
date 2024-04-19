@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { handleLogin } from "@/authentication";
 import { web_link } from "@/config_var";
+import Navbar from "@/components/Navbar";
 
 const Login = () => {
   const [loginForm, setLoginForm] = useState()
@@ -22,11 +23,15 @@ const Login = () => {
           </div>
         </button>
         <p className="text-[#5C5F6A] text-xs font-medium my-6">OR</p>
-        <form action="" className="w-1/4 flex flex-col" onSubmit={async (e) => {
-          e.preventDefault()
-          const isLoggedIn = await handleLogin(loginForm)
-          if (isLoggedIn) router.push('/')
-        }}>
+        <form
+          action=""
+          className="w-1/4 flex flex-col"
+          onSubmit={async e => {
+            e.preventDefault();
+            const isLoggedIn = await handleLogin(loginForm);
+            if (isLoggedIn) router.push("/");
+          }}
+        >
           <label htmlFor="email" className="mt-4">
             Email
           </label>
@@ -39,7 +44,6 @@ const Login = () => {
                 ...loginForm,
                 [e.target.name]: e.target.value,
               })
-              
             }
           />
           <label htmlFor="password" className="mt-4">

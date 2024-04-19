@@ -14,7 +14,7 @@ import RangeSliderUI from './RangeSlider';
 
 
 
-const Filter = () => {
+const Filter = ({genreList}) => {
   const dispatch = useContext(FilterDispatch)
   return (
     <div className="w-1/4 border-2 p-4 rounded-md flex flex-col gap-4 h-fit sticky top-5">
@@ -36,7 +36,7 @@ const Filter = () => {
       </div> */}
       <div>
         <p className="font-semibold mb-2">Genre</p>
-        <Combobox />
+        <Combobox list={genreList}/>
       </div>
       <div>
         <p className="font-semibold mb-2">Price</p>

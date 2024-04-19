@@ -11,10 +11,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import BookData from "@/fakeData";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import Card from "@/components/Card";
 import { v4 as uuid } from "uuid";
-import { FilterDispatch } from "@/context/Context";
+import { FilterDispatch, FilterState } from "@/context/Context";
 import Footer from "@/components/Footer";
 import {
   Pagination,
@@ -28,97 +28,115 @@ import {
 import { be_url, web_link } from "@/config_var";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import Navbar from "@/components/Navbar";
 
-const filterReducer = (filter, action) => {
-  switch (action.type) {
-    case "FilterBookType": {
-      return {
-        genre: [...filter.genre],
-        priceRange: [...filter.priceRange],
-        bookType: action.bookType,
-      };
-    }
-    case "FilterGenre": {
-      const oldGenreFilter = filter.genre;
-      if (oldGenreFilter.indexOf(action.newGenre) == -1)
-        oldGenreFilter.push(action.newGenre);
-      return {
-        ...filter,
-        priceRange: [...filter.priceRange],
-        genre: [...oldGenreFilter],
-      };
-    }
-    case "FilterPrice": {
-      return {
-        ...filter,
-        genre: [...filter.genre],
-        priceRange: action.priceRange,
-      };
-    }
-    case "RemovePriceRange": {
-      return {
-        ...filter,
-        genre: [...filter.genre],
-        priceRange: [],
-      };
-    }
-    case "RemoveTag": {
-      if (filter.bookType === action.name) {
-        return {
-          bookType: "",
-          genre: [...filter.genre],
-          priceRange: [...filter.priceRange],
-        };
-      } else {
-        return {
-          ...filter,
-          priceRange: [...filter.priceRange],
-          genre: filter.genre.filter(ele => ele !== action.name),
-        };
-      }
-    }
-  }
-};
+// const filterReducer = (filter, action) => {
+//   switch (action.type) {
+//     case "FilterBookType": {
+//       return {
+//         genre: [...filter.genre],
+//         priceRange: [...filter.priceRange],
+//         bookType: action.bookType,
+//       };
+//     }
+//     case "FilterGenre": {
+//       const oldGenreFilter = filter.genre;
+//       if (oldGenreFilter.indexOf(action.newGenre) == -1)
+//         oldGenreFilter.push(action.newGenre);
+//       return {
+//         ...filter,
+//         priceRange: [...filter.priceRange],
+//         genre: [...oldGenreFilter],
+//       };
+//     }
+//     case "FilterPrice": {
+//       return {
+//         ...filter,
+//         genre: [...filter.genre],
+//         priceRange: action.priceRange,
+//       };
+//     }
+//     case "RemovePriceRange": {
+//       return {
+//         ...filter,
+//         genre: [...filter.genre],
+//         priceRange: [],
+//       };
+//     }
+//     case "RemoveTag": {
+//       if (filter.bookType === action.name) {
+//         return {
+//           bookType: "",
+//           genre: [...filter.genre],
+//           priceRange: [...filter.priceRange],
+//         };
+//       } else {
+//         return {
+//           ...filter,
+//           priceRange: [...filter.priceRange],
+//           genre: filter.genre.filter(ele => ele !== action.name),
+//         };
+//       }
+//     }
+//   }
+// };
 
 const totalProduct = 84;
 
 const Products = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const [filter, dispatch] = useReducer(filterReducer, {
-    bookType: "",
-    genre: [],
-    priceRange: [],
-  });
+  // const [filter, dispatch] = useReducer(filterReducer, {
+  //   genre: [],
+  //   priceRange: [],
+  // });
+  const filter = useContext(FilterState);
+  const dispatch = useContext(FilterDispatch)
+  const [page, setPage] = useState(3);
   const [sort, setSort] = useState({ kind: "name", order: "asc" }); // Kind: name | price, order: asc | desc
-  const [productList, setProductList] = useState()
-  const productPerPage = 12
-  const page = parseInt(searchParams.get("page"));
-  const finalPage = Math.ceil(totalProduct/productPerPage)
-  console.log(page);
-  let mergeArray = [];
-  if (filter.bookType === "") {
-    mergeArray = filter.genre;
-  } else {
-    mergeArray = [filter.bookType].concat(filter.genre);
-  }
+  const [productList, setProductList] = useState([]);
+  const [list, setList] = useState();
+  const productPerPage = 12;
+  const productName = searchParams.get("name");
+  const finalPage = Math.ceil(totalProduct / productPerPage);
+  let mergeArray = null;
+
+  mergeArray = [].concat(filter.genre);
 
   useEffect(() => {
-    const getAllProducts = async () => {
+    const createGenreList = async () => {
+      const fetchList = await axios.get(`${be_url}/genre`);
+      setList(fetchList.data);
+    };
+    createGenreList();
+
+    const getFilterProducts = async () => {
+      console.log("useEffect filter is called");
       try {
-        const fetchAllProducts = await axios.get(`${be_url}/`)
-        setProductList(fetchAllProducts.data)
-      } catch(e) {
-        console.log(e)
+        const fetchFilterProducts = await axios.get(
+          `${be_url}/filterProducts?name=${filter.name}&price_start=${filter.priceRange[0]}&price_end=${filter.priceRange[1]}&genre_type=${filter.genre}`
+        );
+        // console.log(fetchFilterProducts);
+        setProductList(fetchFilterProducts.data);
+      } catch (e) {
+        console.log(e);
       }
-    }
-    getAllProducts()
-  }, [])
+    };
+    getFilterProducts();
+  }, [filter]);
+
+
+  console.log("Filter dispatch in product page ", filter);
+  console.log("Genre list to sort ", list)
+
+
 
   return (
-    <FilterDispatch.Provider value={dispatch}>
+    <>
       <Navigation path={["Ecommerce", "Products"]} bgColor={"#F6F6F6"} />
       <section className="responsive-layout my-10 flex gap-4">
-        <Filter />
+        <Filter genreList={list} />
         <main className="grow">
           <p className="font-semibold">Applied Filters:</p>
           <div className="w-full flex flex-wrap gap-2 mt-4">
@@ -146,7 +164,7 @@ const Products = () => {
                 colorScheme="gray"
                 size="lg"
               >
-                <TagLabel className="text-black">{`From \$${filter.priceRange[0]} to \$${filter.priceRange[1]}`}</TagLabel>
+                <TagLabel className="text-black">{`From ${filter.priceRange[0]} đ to ${filter.priceRange[1]} đ`}</TagLabel>
                 <TagCloseButton
                   onClick={() => {
                     dispatch({ type: "RemovePriceRange" });
@@ -156,7 +174,7 @@ const Products = () => {
             )}
           </div>
           <div className="flex justify-between items-center mt-4">
-            <p>Showing x-y of z results</p>
+            <p>Showing 1-18 of 18 results</p>
             <Select
               onValueChange={e => {
                 switch (e) {
@@ -191,31 +209,45 @@ const Products = () => {
             </Select>
           </div>
           <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
-            {productList && productList.map(book => (
-              <div key={uuid()} className="flex justify-center">
-                <Card
-                  productId={book.id}
-                  productName={book.name}
-                  isInStock={book.status}
-                  price={book.price}
-                  imgUrl={book.image}
-                />
-              </div>
-            ))}
+            {productList.length &&
+              productList.map(book => (
+                <div key={uuid()} className="flex justify-center">
+                  <Card
+                    productId={book.id}
+                    productName={book.name}
+                    isInStock={book.status}
+                    price={book.price}
+                    imgUrl={book.image}
+                  />
+                </div>
+              ))}
           </div>
           <Pagination className="mt-5">
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious
-                  href={`${web_link}/products?page=${
-                    page > 1 ? page - 1 : page
-                  }`}
+                  // href={`${web_link}/products?page=${
+                  //   page > 1 ? page - 1 : page
+                  // }`}
+                  href=""
+                  onClick={e => {
+                    e.preventDefault();
+                    setPage(oldPage =>
+                      oldPage - 1 > 0 ? oldPage - 1 : oldPage
+                    );
+                    // console.log("This prev is clicked")
+                  }}
                 />
               </PaginationItem>
               {/*Always have first page*/}
               <PaginationItem>
                 <PaginationLink
                   href={`${web_link}/products?page=1`}
+                  onClick={e => {
+                    e.preventDefault();
+                    setPage(1);
+                    // console.log("This prev is clicked")
+                  }}
                   isActive={page == 1 ? true : false}
                 >
                   1
@@ -229,12 +261,17 @@ const Products = () => {
                 </PaginationItem>
               )}
 
-              {((page < 4 && finalPage > 5) || (finalPage <=5)) && (
+              {((page < 4 && finalPage > 5) || finalPage <= 5) && (
                 <>
                   {finalPage > 2 && (
                     <PaginationItem>
                       <PaginationLink
                         href={`${web_link}/products?page=2`}
+                        onClick={e => {
+                          e.preventDefault();
+                          setPage(2);
+                          // console.log("This prev is clicked")
+                        }}
                         isActive={page == 2 ? true : false}
                       >
                         2
@@ -245,6 +282,11 @@ const Products = () => {
                     <PaginationItem>
                       <PaginationLink
                         href={`${web_link}/products?page=3`}
+                        onClick={e => {
+                          e.preventDefault();
+                          setPage(3);
+                          // console.log("This prev is clicked")
+                        }}
                         isActive={page == 3 ? true : false}
                       >
                         3
@@ -255,6 +297,11 @@ const Products = () => {
                     <PaginationItem>
                       <PaginationLink
                         href={`${web_link}/products?page=4`}
+                        onClick={e => {
+                          e.preventDefault();
+                          setPage(4);
+                          // console.log("This prev is clicked")
+                        }}
                         isActive={page == 4 ? true : false}
                       >
                         4
@@ -269,6 +316,11 @@ const Products = () => {
                     <PaginationItem>
                       <PaginationLink
                         href={`${web_link}/products?page=${page - 1}`}
+                        onClick={e => {
+                          e.preventDefault();
+                          setPage(prevPage => prevPage - 1);
+                          // console.log("This prev is clicked")
+                        }}
                       >
                         {page - 1}
                       </PaginationLink>
@@ -278,6 +330,11 @@ const Products = () => {
                     <PaginationItem>
                       <PaginationLink
                         href={`${web_link}/products?page=${page}`}
+                        onClick={e => {
+                          e.preventDefault();
+                          setPage(prevPage => prevPage);
+                          // console.log("This prev is clicked")
+                        }}
                         isActive
                       >
                         {page}
@@ -288,6 +345,11 @@ const Products = () => {
                     <PaginationItem>
                       <PaginationLink
                         href={`${web_link}/products?page=${page + 1}`}
+                        onClick={e => {
+                          e.preventDefault();
+                          setPage(prevPage => prevPage + 1);
+                          // console.log("This prev is clicked")
+                        }}
                       >
                         {page + 1}
                       </PaginationLink>
@@ -301,6 +363,11 @@ const Products = () => {
                   <PaginationItem>
                     <PaginationLink
                       href={`${web_link}/products?page=${finalPage - 3}`}
+                      onClick={e => {
+                        e.preventDefault();
+                        setPage(finalPage - 3);
+                        // console.log("This prev is clicked")
+                      }}
                       isActive={page == finalPage - 3 ? true : false}
                     >
                       {finalPage - 3}
@@ -309,6 +376,11 @@ const Products = () => {
                   <PaginationItem>
                     <PaginationLink
                       href={`${web_link}/products?page=${finalPage - 2}`}
+                      onClick={e => {
+                        e.preventDefault();
+                        setPage(finalPage - 2);
+                        // console.log("This prev is clicked")
+                      }}
                       isActive={page == finalPage - 2 ? true : false}
                     >
                       {finalPage - 2}
@@ -317,6 +389,11 @@ const Products = () => {
                   <PaginationItem>
                     <PaginationLink
                       href={`${web_link}/products?page=${finalPage - 1}`}
+                      onClick={e => {
+                        e.preventDefault();
+                        setPage(finalPage - 1);
+                        // console.log("This prev is clicked")
+                      }}
                       isActive={page == finalPage - 1 ? true : false}
                     >
                       {finalPage - 1}
@@ -337,6 +414,11 @@ const Products = () => {
                 <PaginationItem>
                   <PaginationLink
                     href={`${web_link}/products?page=${finalPage}`}
+                    onClick={e => {
+                      e.preventDefault();
+                      setPage(finalPage);
+                      // console.log("This prev is clicked")
+                    }}
                     isActive={page == finalPage ? true : false}
                   >
                     {finalPage}
@@ -350,6 +432,12 @@ const Products = () => {
                   href={`${web_link}/products?page=${
                     page * 12 > totalProduct ? page : page + 1
                   }`}
+                  onClick={e => {
+                    e.preventDefault();
+                    setPage(prevPage =>
+                      prevPage * 12 >= totalProduct ? prevPage : prevPage + 1
+                    );
+                  }}
                 />
               </PaginationItem>
             </PaginationContent>
@@ -357,7 +445,7 @@ const Products = () => {
         </main>
       </section>
       <Footer bgColor={"#F6F6F6"} />
-    </FilterDispatch.Provider>
+    </>
   );
 };
 

@@ -1,11 +1,15 @@
 "use client";
 
+import { getUserId } from "@/authentication";
 import Detail from "@/components/Detail";
 import Navigation from "@/components/Navigation";
 import SetPassword from "@/components/SetPassword";
 import ShippingAddress from "@/components/ShippingAddress";
 import Sidebar from "@/components/Sidebar";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Navbar from "@/components/Navbar";
 
 const Profile = () => {
   const [navItem, setNavItem] = useState("Addr"); // Addr | Pass | Detail

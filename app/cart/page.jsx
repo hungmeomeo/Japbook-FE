@@ -12,6 +12,7 @@ import axios from "axios";
 import { be_url, web_link } from "@/config_var";
 import { getUserId } from "@/authentication";
 import { useRouter } from "next/navigation";
+import Navbar from "@/components/Navbar";
 
 const Cart = () => {
   // cart or ship

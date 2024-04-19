@@ -28,11 +28,13 @@ const handleLogout = async () => {
 }
 
 const getUserToken = async () => {
-    return cookies().get("userToken").value
+    if (cookies().get("userToken")) return cookies().get("userToken").value
+    return null
 }
 
 const getUserId = async () => {
-    return cookies().get("userId").value
+    if (cookies().get("userId")) return cookies().get("userId").value
+    return null
 }
 
 export {handleLogin, handleLogout, getUserToken, getUserId}

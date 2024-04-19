@@ -18,21 +18,20 @@ import { be_url } from "@/config_var";
 //   "Shoujo",
 // ];
 
-export default function Combobox() {
+export default function Combobox({list}) {
   const dispatch = useContext(FilterDispatch);
   const [isOpen, setOpen] = useState(false);
-  const [list, setList] = useState()
-  const [genreList, setGenreList] = useState();
+  const [genreList, setGenreList] = useState(list);
   const [searchValue, setSearchValue] = useState("");
-  useEffect(() => {
-    const createGenreList = async () => {
-      const fetchList = await axios.get(`${be_url}/genre`)
-      console.log(fetchList.data)
-      setList(fetchList.data)
-      setGenreList(list)
-    }
-    createGenreList()
-  }, [])
+  // useEffect(() => {
+  //   const createGenreList = async () => {
+  //     const fetchList = await axios.get(`${be_url}/genre`)
+  //     console.log(fetchList.data)
+  //     setList(fetchList.data)
+  //     setGenreList(list)
+  //   }
+  //   createGenreList()
+  // }, [])
   return (
     <div className="relative">
       <button

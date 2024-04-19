@@ -9,12 +9,14 @@ const Card = ({productId, productName, isInStock, price, imgUrl}) => {
       onClick={() => {
         router.push(`${web_link}/products/${productId}`);
       }}
-      className="p-2 hover:bg-slate-100 hover:rounded-lg w-[300px]"
+      className="p-2 hover:bg-slate-100 hover:rounded-lg xl:w-[300px] xl:h-[400px] lg:w-[240px] lg:h-[320px] md:flex-wrap md:w-[240px] md:h-[320px] sm:w-[240px] sm:h-[320px]"
     >
-      <div className="w-full h-72 bg-[#F6F6F6] rounded">
+      <div className="w-full h-3/4 bg-[#F6F6F6] rounded">
         <img src={imgUrl} alt="" className="h-full mx-auto" />
       </div>
-      <h4 className="mt-2 w-full overflow-hidden whitespace-nowrap text-ellipsis">{productName}</h4>
+      <h4 className="mt-2 w-full overflow-hidden whitespace-nowrap text-ellipsis">
+        {productName}
+      </h4>
       <div className="flex items-center gap-2 mt-4">
         <p className="text-xs font-semibold border-2 rounded-full px-2 py-1">
           {isInStock ? "IN STOCK" : "OUT STOCK"}

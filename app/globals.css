@@ -77,6 +77,6 @@
 
   @layer utilities {
     .responsive-layout {
-        @apply xl:px-40 lg:px-24 md:px-10
+        @apply xl:px-40 lg:px-24 md:px-10 sm:px-5 px-5
     }
   }

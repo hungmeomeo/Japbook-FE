@@ -10,6 +10,7 @@ import axios from "axios";
 import { be_url } from "@/config_var";
 import { getUserId, getUserToken } from "@/authentication";
 import { useToast } from "@chakra-ui/react";
+import Navbar from "@/components/Navbar";
 
 const page = ({ params }) => {
   const [qty, setQty] = useState(1);
@@ -23,9 +24,9 @@ const page = ({ params }) => {
   //   price: product?.productPrice,
   //   quantity: qty,
   // };
-  const [cartProduct, setCartProduct] = useState()
+  const [cartProduct, setCartProduct] = useState();
   const [reviewList, setReviewList] = useState();
-  const [reloadPage, setReloadPage] = useState(0)
+  const [reloadPage, setReloadPage] = useState(0);
   const toast = useToast();
 
   useEffect(() => {
@@ -35,14 +36,16 @@ const page = ({ params }) => {
         setBook(response.data);
         const response2 = await axios.get(`${be_url}/home`);
         setRandBook(response2.data);
-        const response3 = await axios.get(`${be_url}/review/${response.data._id}`);
+        const response3 = await axios.get(
+          `${be_url}/review/${response.data._id}`
+        );
         setReviewList(response3.data.reviews);
       } catch (e) {
         console.log(e);
       }
     };
 
-    fullFetch()
+    fullFetch();
   }, [reloadPage]);
   return (
     <>
@@ -117,10 +120,13 @@ const page = ({ params }) => {
               onClick={async () => {
                 if (book && book.status == "InStock") {
                   try {
-                    const userToken = await getUserToken()
-                    const userId = await getUserId()
-                    const addProductToCart = await axios.post(`${be_url}/user/${userId}/${book._id}`, {quantity: qty})
-                    console.log(addProductToCart.data)
+                    const userToken = await getUserToken();
+                    const userId = await getUserId();
+                    const addProductToCart = await axios.post(
+                      `${be_url}/user/${userId}/${book._id}`,
+                      { quantity: qty }
+                    );
+                    console.log(addProductToCart.data);
                     toast({
                       title: "Product add to cart",
                       description: "The book you want has been added to cart",
@@ -128,22 +134,26 @@ const page = ({ params }) => {
                       duration: 1000,
                       isClosable: true,
                     });
+                  } catch (e) {
+                    console.log(e);
                   }
-                  catch(e) {
-                    console.log(e)
-                  }
-
                 }
               }}
               className={`text-white bg-black px-24 py-3 rounded-lg mt-20 ${
-                book && book.status == "OutStock" && "bg-gray-500 cursor-not-allowed"
+                book &&
+                book.status == "OutStock" &&
+                "bg-gray-500 cursor-not-allowed"
               }`}
             >
               Add to cart
             </button>
           </div>
         </section>
-        <Review bookReviews={reviewList} bookInfo={book} setReloadPage={setReloadPage}/>
+        <Review
+          bookReviews={reviewList}
+          bookInfo={book}
+          setReloadPage={setReloadPage}
+        />
         <section className="my-20">
           <h2 className="font-semibold text-2xl">You might also like</h2>
           <p className="text-gray-600">SIMILAR PRODUCT</p>

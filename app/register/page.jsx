@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { be_url, web_link } from "@/config_var";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Navbar from "@/components/Navbar";
 
 
 
@@ -29,20 +30,23 @@ const Register = () => {
           </div>
         </button>
         <p className="text-[#5C5F6A] text-xs font-medium my-6">OR</p>
-        <form action="" className="w-1/4 flex flex-col" onSubmit={async (e) => {
-          e.preventDefault()
-          try {
-            const sendRegister = await axios.post(`${be_url}/auth/signup`, {
-              username: registerForm.username,
-              password: registerForm.password,
-              email: registerForm.email
-            })
-          }
-          catch(e) {
-            console.log(e)
-          }
-          router.push("/login")
-        }}>
+        <form
+          action=""
+          className="w-1/4 flex flex-col"
+          onSubmit={async e => {
+            e.preventDefault();
+            try {
+              const sendRegister = await axios.post(`${be_url}/auth/signup`, {
+                username: registerForm.username,
+                password: registerForm.password,
+                email: registerForm.email,
+              });
+            } catch (e) {
+              console.log(e);
+            }
+            router.push("/login");
+          }}
+        >
           <label htmlFor="email" className="">
             Name
           </label>
