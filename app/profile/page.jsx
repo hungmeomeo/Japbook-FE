@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const Profile = () => {
   const [navItem, setNavItem] = useState("Addr"); // Addr | Pass | Detail
@@ -31,6 +32,7 @@ const Profile = () => {
       <Sidebar navItem={navItem} setNavItem={setNavItem}>
         {display}
       </Sidebar>
+      <Footer bgColor={"#F6F6F6"}/>
     </>
   );
 };

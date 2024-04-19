@@ -1,34 +1,35 @@
 'use client'
 
 import { handleLogout } from "@/authentication";
+import { Divider } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 const Sidebar = ({ children, navItem, setNavItem }) => {
   const router = useRouter()
   return (
-    <div className="responsive-layout flex mt-16 h-[400px]">
-      <aside className="flex flex-col gap-4 pr-10 border-r-2 self-stretch justify-center">
+    <div className="responsive-layout flex flex-col md:flex-row mt-16 md:h-[400px]">
+      <aside className="flex flex-row gap-2 md:flex-col border-r-2 self-stretch justify-start md:justify-center">
         <div
           onClick={() => {
             setNavItem("Wishlist");
           }}
-          className={`flex items-center font-medium gap-1 px-10 py-3 cursor-pointer text-[#5C5F6A] ${
+          className={`flex items-center font-medium gap-1 w-fit px-0.5 md:px-10 py-3 cursor-pointer text-[#5C5F6A] ${
             navItem == "Wishlist" && " bg-[#F6F6F6] rounded-lg text-black"
           }`}
         >
-          <img src="/Heart.png" alt="" />
+          <img src="/Heart.png" alt="" className="hidden md:inline-block"/>
           Wishlist
         </div>
         <div
           onClick={() => {
             setNavItem("Addr");
           }}
-          className={`flex items-center font-medium gap-1 px-10 py-3 cursor-pointer text-[#5C5F6A] ${
+          className={`flex items-center font-medium gap-1 w-fit px-0.5 md:px-10 py-3 cursor-pointer text-[#5C5F6A] ${
             navItem == "Addr" && " bg-[#F6F6F6] rounded-lg text-black"
           }`}
         >
-          <img src="/Delivery.png" alt="" />
+          <img src="/Delivery.png" alt="" className="hidden md:inline-block"/>
           Address
         </div>
         {/* <div
@@ -64,14 +65,15 @@ const Sidebar = ({ children, navItem, setNavItem }) => {
             }
             
           }}
-          className={`flex items-center font-medium gap-1 px-10 py-3 cursor-pointer text-[#5C5F6A] ${
+          className={`flex items-center font-medium gap-1 px-0.5 md:px-10 py-3 cursor-pointer text-[#5C5F6A] ${
             navItem == "Logout" && " bg-[#F6F6F6] rounded-lg text-black"
           }`}
         >
-          <img src="/Logout.png" alt="" />
+          <img src="/Logout.png" alt="" className="hidden md:inline-block"/>
           Logout
         </div>
       </aside>
+      <Divider className="md:hidden"/>
       {children}
     </div>
   );

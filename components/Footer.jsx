@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = ({bgColor}) => {
   return (
-    <footer className={`responsive-layout py-20 flex flex-wrap justify-between bg-[${bgColor}]`}>
+    <footer className={`responsive-layout py-20 flex flex-wrap justify-between bg-[${bgColor}] mt-6`}>
       <div className="mt-5 md:w-1/3">
         <div className="flex gap-2 font-bold text-xl items-center">
           <img src="/logo-footer.png" alt="" />

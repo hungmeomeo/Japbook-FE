@@ -57,9 +57,9 @@ const Cart = () => {
   return (
     <>
       <Navigation path={["Ecommerce", "Cart"]} bgColor={"#F6F6F6"} />
-      <main className="responsive-layout mt-24 xl:flex xl:flex-row lg:flex lg:flex-row justify-between mb-40 w-full md:flex-col sm:flex-col">
+      <main className="responsive-layout mt-24 gap-10 flex flex-col lg:flex-row justify-between mb-40 w-full">
         {orderState == "cart" ? (
-          <section className="xl:w-3/5">
+          <section className="lg:w-3/5">
             <h3 className="font-semibold text-lg">Your cart</h3>
             <Divider />
             <ul className="flex flex-col gap-4 mt-4 h-96 overflow-y-scroll w-full">
@@ -77,7 +77,7 @@ const Cart = () => {
           </section>
         ) : (
           <section>
-            <div className="flex justify-between">
+            <div className="flex flex-col md:flex-row justify-between">
               <h3 className="font-semibold text-lg">Shipping Address</h3>
               <p className="text-gray-500">
                 Can't see all information, update{" "}
@@ -89,12 +89,12 @@ const Cart = () => {
                 </a>
               </p>
             </div>
-            <form action="" className="w-[600px] mt-6">
+            <form action="" className="w-full mt-6">
               <FormControl>
                 <FormLabel>Street Address</FormLabel>
                 <Input value={customerInfo && customerInfo.address} disabled />
               </FormControl>
-              <div className="flex gap-2 w-full mt-4">
+              <div className="flex flex-col md:flex-row gap-2 w-full mt-4">
                 <FormControl className="w-[300px]">
                   <FormLabel>City</FormLabel>
                   <Input
@@ -103,14 +103,14 @@ const Cart = () => {
                     disabled
                   />
                 </FormControl>
-                <FormControl className="w-1/4">
+                <FormControl className="w-[300px]">
                   <FormLabel>District</FormLabel>
                   <Input
                     value={customerInfo && customerInfo.district}
                     disabled
                   />
                 </FormControl>
-                <FormControl className="w-1/4">
+                <FormControl className="w-[300px]">
                   <FormLabel>Ward</FormLabel>
                   <Input value={customerInfo && customerInfo.ward} disabled />
                 </FormControl>
@@ -127,7 +127,7 @@ const Cart = () => {
           </section>
         )}
 
-        <section className="border-2 p-4 h-fit rounded-lg xl:w-[400px] lg:w-[360px]">
+        <section className="border-2 p-4 h-fit mt-4 lg:mt-0 rounded-lg xl:w-[400px] lg:w-[360px]">
           <h3 className="font-semibold text-lg">Order Summary</h3>
           <div className="flex justify-between mt-8">
             <p className="text-[#5C5F6A] font-medium">Subtotal:</p>

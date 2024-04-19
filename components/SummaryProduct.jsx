@@ -26,17 +26,17 @@ const SummaryProduct = ({ productInfo, updateCart}) => {
   },[qty])
   console.log(productInfo)
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between w-full">
       <div className="flex items-center">
         <div className="w-16 h-16 rounded-md bg-[#F6F6F6] flex justify-center">
           <img src={productInfo.product.image} alt="" className="object-fit" />
         </div>
-        <p className="font-semibold text-lg ml-10 w-[180px] truncate text-ellipsis">
+        <p className="font-semibold text-lg ml-5 w-[180px] truncate text-ellipsis">
           {productInfo.product.name}
         </p>
       </div>
       <div className="flex items-center">
-        <p className="font-semibold ml-28">
+        <p className="font-semibold ml-20">
           {productInfo.product.price * productInfo.quantity}
         </p>
         <Input

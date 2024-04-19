@@ -1,4 +1,4 @@
-import { Divider } from "@chakra-ui/react";
+import { Divider, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ReactStars from "react-stars";
 import { Textarea } from "@chakra-ui/react";
@@ -8,6 +8,7 @@ import { be_url } from "@/config_var";
 import { getUserId } from "@/authentication";
 
 const Review = ({ bookReviews, bookInfo, setReloadPage }) => {
+  const toast = useToast()
   const [review, setReview] = useState({
     comment: "",
     rating: 0,
@@ -26,15 +27,21 @@ const Review = ({ bookReviews, bookInfo, setReloadPage }) => {
       );
       console.log(putReview);
     } catch (e) {
-      console.log(e);
+      toast({
+        title: "You are not signed in",
+        description: "You need to log in to leave a review",
+        status: "error",
+        duration: 1000,
+        isClosable: true,
+      });
     }
   };
   return (
-    <section className="my-20 flex h-96 gap-10">
-      <div className="w-1/2">
+    <section className="my-10 md:my-20 flex flex-col md:flex-row md:h-96 gap-10 ">
+      <div className="md:w-1/2">
         <h5 className="text-xl font-semibold">Reviews</h5>
         <Divider />
-        <ul className="h-full overflow-y-scroll">
+        <ul className="h-96 md:h-full overflow-y-scroll">
           {bookReviews &&
             bookReviews.map(ele => (
               <div
@@ -51,17 +58,17 @@ const Review = ({ bookReviews, bookInfo, setReloadPage }) => {
         </ul>
       </div>
       <Divider orientation="vertical" />
-      <div className="w-1/2">
+      <div className="md:w-1/2">
         <h5 className="text-xl font-semibold">Write Reviews</h5>
         <Divider />
         <form
           action=""
           className="mt-6"
-          onSubmit={async (e) => {
-            e.preventDefault()
+          onSubmit={async e => {
+            e.preventDefault();
             await postReview();
-            setReloadPage(old => (old + 1) % 2)
-            setReview({comment: "", rating: 0})
+            setReloadPage(old => (old + 1) % 2);
+            setReview({ comment: "", rating: 0 });
           }}
         >
           <Textarea

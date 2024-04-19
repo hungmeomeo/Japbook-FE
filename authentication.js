@@ -28,12 +28,12 @@ const handleLogout = async () => {
 }
 
 const getUserToken = async () => {
-    if (cookies().get("userToken")) return cookies().get("userToken").value
+    if (cookies().has("userToken")) return cookies().get("userToken").value
     return null
 }
 
 const getUserId = async () => {
-    if (cookies().get("userId")) return cookies().get("userId").value
+    if (cookies().has("userId")) return cookies().get("userId").value
     return null
 }
 

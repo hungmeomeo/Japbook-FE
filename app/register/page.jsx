@@ -23,66 +23,38 @@ const Register = () => {
     <>
       <div className="flex flex-col items-center mb-10">
         <Navigation path={["Ecommerce", "Sign up"]} />
-        <button className="flex text-[#5C5F6A] border-2 py-2 w-1/4 rounded-md justify-center mt-10">
-          <div className="flex gap-2">
-            <img src="/Google.png" alt="" />
-            <p>Continue with Google</p>
-          </div>
-        </button>
-        <p className="text-[#5C5F6A] text-xs font-medium my-6">OR</p>
-        <form
-          action=""
-          className="w-1/4 flex flex-col"
-          onSubmit={async e => {
-            e.preventDefault();
-            try {
-              const sendRegister = await axios.post(`${be_url}/auth/signup`, {
-                username: registerForm.username,
-                password: registerForm.password,
-                email: registerForm.email,
-              });
-            } catch (e) {
-              console.log(e);
-            }
-            router.push("/login");
-          }}
-        >
-          <label htmlFor="email" className="">
-            Name
-          </label>
-          <input
-            type="text"
-            name="username"
-            className="outline-none border-2 focus:border-[#5C5F6A] px-2 rounded-md py-2"
-            onChange={e =>
-              setRegisterForm({
-                ...registerForm,
-                [e.target.name]: e.target.value,
-              })
-            }
-          />
-          <label htmlFor="email" className="mt-4">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            className="outline-none border-2 focus:border-[#5C5F6A] px-2 rounded-md py-2"
-            onChange={e =>
-              setRegisterForm({
-                ...registerForm,
-                [e.target.name]: e.target.value,
-              })
-            }
-          />
-          <label htmlFor="password" className="mt-4">
-            Password
-          </label>
-          <div className="flex border-2 focus:border-[#5C5F6A] px-2 rounded-md py-2 items-center justify-between">
+        <div className="flex flex-col items-center w-full px-6 md:w-3/4 lg:w-[400px]">
+          <button className="flex text-[#5C5F6A] w-full border-2 py-2 rounded-md justify-center mt-10">
+            <div className="flex gap-2">
+              <img src="/Google.png" alt="" />
+              <p>Continue with Google</p>
+            </div>
+          </button>
+          <p className="text-[#5C5F6A] text-xs font-medium my-6">OR</p>
+          <form
+            action=""
+            className="flex flex-col w-full"
+            onSubmit={async e => {
+              e.preventDefault();
+              try {
+                const sendRegister = await axios.post(`${be_url}/auth/signup`, {
+                  username: registerForm.username,
+                  password: registerForm.password,
+                  email: registerForm.email,
+                });
+              } catch (e) {
+                console.log(e);
+              }
+              router.push("/login");
+            }}
+          >
+            <label htmlFor="email" className="">
+              Name
+            </label>
             <input
-              type={showPwd ? "text" : "password"}
-              name="password"
-              className="outline-none w-full"
+              type="text"
+              name="username"
+              className="outline-none border-2 focus:border-[#5C5F6A] px-2 rounded-md py-2"
               onChange={e =>
                 setRegisterForm({
                   ...registerForm,
@@ -90,26 +62,56 @@ const Register = () => {
                 })
               }
             />
-            <div className="w-6" onClick={() => setShowPwd(old => !old)}>
-              {showPwd ? (
-                <img src="/eye.png" alt="" />
-              ) : (
-                <img src="/eye-off.png" alt="" />
-              )}
+            <label htmlFor="email" className="mt-4">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              className="outline-none border-2 focus:border-[#5C5F6A] px-2 rounded-md py-2"
+              onChange={e =>
+                setRegisterForm({
+                  ...registerForm,
+                  [e.target.name]: e.target.value,
+                })
+              }
+            />
+            <label htmlFor="password" className="mt-4">
+              Password
+            </label>
+            <div className="flex border-2 focus:border-[#5C5F6A] px-2 rounded-md py-2 items-center justify-between">
+              <input
+                type={showPwd ? "text" : "password"}
+                name="password"
+                className="outline-none w-full"
+                onChange={e =>
+                  setRegisterForm({
+                    ...registerForm,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              />
+              <div className="w-6" onClick={() => setShowPwd(old => !old)}>
+                {showPwd ? (
+                  <img src="/eye.png" alt="" />
+                ) : (
+                  <img src="/eye-off.png" alt="" />
+                )}
+              </div>
             </div>
-          </div>
-          <button className="bg-black text-white font-semibold rounded-md py-2 mt-8">
-            Create Account
-          </button>
-        </form>
-        <p className="text-[#5C5F6A] mt-4">
-          Already have an account?{" "}
-          <span>
-            <a href={`${web_link}/login`} className="hover:underline">
-              Login
-            </a>
-          </span>
-        </p>
+            <button className="bg-black text-white font-semibold rounded-md py-2 mt-8">
+              Create Account
+            </button>
+          </form>
+          <p className="text-[#5C5F6A] mt-4">
+            Already have an account?{" "}
+            <span>
+              <a href={`${web_link}/login`} className="hover:underline">
+                Login
+              </a>
+            </span>
+          </p>
+        </div>
       </div>
       <Footer bgColor="#F6F6F6" />
     </>

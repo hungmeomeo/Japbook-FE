@@ -37,11 +37,11 @@ const ShippingAddress = () => {
     getCusInfo()
   }, []);
   return (
-    <div className="pl-10">
+    <div className="mt-4 py-4 md:mt-0 md:pl-10">
       <p className="font-semibold text-lg">Shipping Address</p>
       <form
         action=""
-        className="flex flex-col gap-4 mt-6"
+        className="flex flex-col gap-4 my-4"
         onSubmit={async (e) => {
           e.preventDefault()
           try {

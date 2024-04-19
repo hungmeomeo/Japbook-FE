@@ -2,7 +2,7 @@
 
 import Card from "@/components/Card";
 import Footer from "@/components/Footer";
-import { Tag, Toast } from "@chakra-ui/react";
+import { Tag } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import Review from "@/components/Review";
@@ -53,7 +53,7 @@ const page = ({ params }) => {
         <p className="text-gray-600 font-medium">
           Ecommerce &gt; <span className="text-black">{book && book.name}</span>
         </p>
-        <section className="flex gap-10 xl:gap-30 lg:gap-20 mt-10">
+        <section className="flex flex-col md:flex-row gap-10 xl:gap-30 lg:gap-20 mt-10">
           <div className="xl:w-2/5 lg:w-2/5 md:w-1/2">
             <img src={book && book.image} alt="" className="w-full" />
           </div>
@@ -135,7 +135,13 @@ const page = ({ params }) => {
                       isClosable: true,
                     });
                   } catch (e) {
-                    console.log(e);
+                    toast({
+                      title: "Cannot add to cart",
+                      description: "You need to sign in to take this action",
+                      status: "error",
+                      duration: 1000,
+                      isClosable: true,
+                    });
                   }
                 }
               }}
@@ -157,7 +163,7 @@ const page = ({ params }) => {
         <section className="my-20">
           <h2 className="font-semibold text-2xl">You might also like</h2>
           <p className="text-gray-600">SIMILAR PRODUCT</p>
-          <div className="flex justify-between mt-4">
+          <div className="w-full flex flex-col justify-between items-center mt-10 gap-10 md:justify-center md:mt-24 md:flex md:flex-row md:flex-wrap">
             {randBook &&
               [1, 4, 6, 3].map(idx => (
                 <Card

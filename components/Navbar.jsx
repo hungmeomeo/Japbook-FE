@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { web_link } from "@/config_var";
 import { useRouter } from "next/navigation";
 import { getUserId } from "@/authentication";
@@ -11,13 +11,7 @@ const Navbar = () => {
   const router = useRouter();
   const [searchBook, setSearchBook] = useState("");
   const [showNav, setShowNav] = useState(false)
-  const [uid, setUid] = useState();
-  useEffect(() => {
-    (async () => {
-      const id = await getUserId();
-      setUid(id);
-    })();
-  }, []);
+
   return (
     <nav className="flex items-center py-5 responsive-layout shadow-md justify-between">
       <div className="flex items-center gap-2 font-bold text-2xl">
@@ -55,14 +49,19 @@ const Navbar = () => {
             />
           </form>
           <div
-            onClick={() => router.push("/cart")}
+            onClick={async () => {
+              const userId = await getUserId();
+              if (userId) router.push("/cart");
+              else router.push("/login");
+            }}
             className="hover:bg-[#F6F6F6] w-10 h-10 flex justify-center items-center rounded-full"
           >
             <img src="/shopping cart.png" alt="shopping cart" />
           </div>
           <div
-            onClick={() => {
-              if (uid) router.push(`/profile`);
+            onClick={async () => {
+              const userId = await getUserId();
+              if (userId) router.push("/profile");
               else router.push("/login");
             }}
             className="hover:bg-[#F6F6F6] w-10 h-10 flex justify-center items-center rounded-full"
@@ -114,15 +113,22 @@ const Navbar = () => {
               />
             </form>
             <div
-              onClick={() => router.push("/cart")}
+              onClick={async () => {
+                const userId = await getUserId();
+                if (userId) router.push("/cart");
+                else router.push("/login");
+                setShowNav(false)
+              }}
               className="hover:bg-[#F6F6F6] w-10 h-10 flex justify-center items-center rounded-full"
             >
               <img src="/shopping cart.png" alt="shopping cart" />
             </div>
             <div
-              onClick={() => {
-                if (uid) router.push(`/profile`);
+              onClick={async () => {
+                const userId = await getUserId();
+                if (userId) router.push("/profile");
                 else router.push("/login");
+                setShowNav(false);
               }}
               className="hover:bg-[#F6F6F6] w-10 h-10 flex justify-center items-center rounded-full"
             >
