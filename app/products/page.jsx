@@ -26,12 +26,10 @@ import {
 } from "@/components/ui/pagination";
 import { be_url, web_link } from "@/config_var";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
 const totalProduct = 84;
 
 const Products = () => {
-  const router = useRouter();
   const filter = useContext(FilterState);
   const dispatch = useContext(FilterDispatch)
   const [page, setPage] = useState(3);
@@ -39,7 +37,6 @@ const Products = () => {
   const [productList, setProductList] = useState([]);
   const [list, setList] = useState();
   const productPerPage = 12;
-  const productName = searchParams.get("name");
   const finalPage = Math.ceil(totalProduct / productPerPage);
   let mergeArray = null;
 
