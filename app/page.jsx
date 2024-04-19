@@ -9,6 +9,7 @@ import { getUserToken } from "@/authentication";
 const HomePage = () => {
   const [bookStatus, setBookStatus] = useState("Latest"); // Featured | Latest
   const [bookList, setBookList] = useState();
+  const [mail, setMail] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -212,10 +213,29 @@ const HomePage = () => {
             We love to surprise our subscribers with occasional gifts
           </p>
         </div>
-        <form className="flex w-1/3 h-12 gap-2 mt-4">
+        <form
+          method="POST"
+          className="flex w-1/3 h-12 gap-2 mt-4"
+          onSubmit={async e => {
+            e.preventDefault();
+            try {
+              const noti = await axios.post(`${web_link}/api/send-email`, {
+                to: mail,
+                subject: "JapRead",
+                text: "Thank you for subscribing to our shop You will be notified about our news (new arrivals, sales, etc..) every one months. You can unsubscribe anytime if you think that this annoys you by clicking the subscribe button again. Hope you get the best experience when shopping at our store. We are looking forward to serving you\nBest Wishes \nJapRead team",
+              });
+              
+              console.log(noti.data);
+            } catch (e) {
+              console.log(e);
+            }
+          }}
+        >
           <input
             type="text"
+            value={mail}
             placeholder="Your email address"
+            onChange={e => setMail(e.target.value)}
             className="grow pl-2 outline-none bg-[#F6F6F6] border-2 px-2 py-0.5 lg:py-1 rounded-md focus:border-[#878A92]"
           />
           <button className="bg-black text-white px-4 rounded">
