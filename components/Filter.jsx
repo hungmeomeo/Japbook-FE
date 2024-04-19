@@ -17,7 +17,7 @@ import RangeSliderUI from './RangeSlider';
 const Filter = ({genreList}) => {
   const dispatch = useContext(FilterDispatch)
   return (
-    <div className="w-1/4 border-2 p-4 rounded-md flex flex-col gap-4 h-fit sticky top-5">
+    <div className="w-3/5 md:w-1/4 bg-white border-2 p-4 rounded-md flex flex-col gap-4 h-fit md:sticky top-5">
       {/* <div>
         <p className="font-semibold mb-2">Book Type</p>
         <Select

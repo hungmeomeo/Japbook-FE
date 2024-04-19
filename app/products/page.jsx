@@ -10,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import BookData from "@/fakeData";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import Card from "@/components/Card";
 import { v4 as uuid } from "uuid";
@@ -29,72 +28,16 @@ import { be_url, web_link } from "@/config_var";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Navbar from "@/components/Navbar";
-
-// const filterReducer = (filter, action) => {
-//   switch (action.type) {
-//     case "FilterBookType": {
-//       return {
-//         genre: [...filter.genre],
-//         priceRange: [...filter.priceRange],
-//         bookType: action.bookType,
-//       };
-//     }
-//     case "FilterGenre": {
-//       const oldGenreFilter = filter.genre;
-//       if (oldGenreFilter.indexOf(action.newGenre) == -1)
-//         oldGenreFilter.push(action.newGenre);
-//       return {
-//         ...filter,
-//         priceRange: [...filter.priceRange],
-//         genre: [...oldGenreFilter],
-//       };
-//     }
-//     case "FilterPrice": {
-//       return {
-//         ...filter,
-//         genre: [...filter.genre],
-//         priceRange: action.priceRange,
-//       };
-//     }
-//     case "RemovePriceRange": {
-//       return {
-//         ...filter,
-//         genre: [...filter.genre],
-//         priceRange: [],
-//       };
-//     }
-//     case "RemoveTag": {
-//       if (filter.bookType === action.name) {
-//         return {
-//           bookType: "",
-//           genre: [...filter.genre],
-//           priceRange: [...filter.priceRange],
-//         };
-//       } else {
-//         return {
-//           ...filter,
-//           priceRange: [...filter.priceRange],
-//           genre: filter.genre.filter(ele => ele !== action.name),
-//         };
-//       }
-//     }
-//   }
-// };
 
 const totalProduct = 84;
 
 const Products = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // const [filter, dispatch] = useReducer(filterReducer, {
-  //   genre: [],
-  //   priceRange: [],
-  // });
   const filter = useContext(FilterState);
   const dispatch = useContext(FilterDispatch)
   const [page, setPage] = useState(3);
-  const [sort, setSort] = useState({ kind: "name", order: "asc" }); // Kind: name | price, order: asc | desc
+  const [sort, setSort] = useState({ kind: "price", order: "asc" }); // Kind: name | price, order: asc | desc
   const [productList, setProductList] = useState([]);
   const [list, setList] = useState();
   const productPerPage = 12;
@@ -115,29 +58,30 @@ const Products = () => {
       console.log("useEffect filter is called");
       try {
         const fetchFilterProducts = await axios.get(
-          `${be_url}/filterProducts?name=${filter.name}&price_start=${filter.priceRange[0]}&price_end=${filter.priceRange[1]}&genre_type=${filter.genre}`
+          `${be_url}/filterProducts?name=${filter.name}&price_start=${filter.priceRange[0]}&price_end=${filter.priceRange[1]}&genre_type=${filter.genre}&order=${sort.order}`
         );
-        // console.log(fetchFilterProducts);
+        console.log(fetchFilterProducts);
         setProductList(fetchFilterProducts.data);
       } catch (e) {
         console.log(e);
       }
     };
     getFilterProducts();
-  }, [filter]);
+  }, [filter, sort]);
 
 
-  console.log("Filter dispatch in product page ", filter);
-  console.log("Genre list to sort ", list)
+  // console.log("Filter dispatch in product page ", filter);
+  // console.log("Genre list to sort ", list)
+  // console.log("sort order", sort)
 
 
 
   return (
     <>
       <Navigation path={["Ecommerce", "Products"]} bgColor={"#F6F6F6"} />
-      <section className="responsive-layout my-10 flex gap-4">
+      <section className="responsive-layout my-10 flex flex-col items-center md:flex-row md:items-start gap-4">
         <Filter genreList={list} />
-        <main className="grow">
+        <main className="w-full">
           <p className="font-semibold">Applied Filters:</p>
           <div className="w-full flex flex-wrap gap-2 mt-4">
             {mergeArray.map(ele => (
@@ -174,16 +118,16 @@ const Products = () => {
             )}
           </div>
           <div className="flex justify-between items-center mt-4">
-            <p>Showing 1-18 of 18 results</p>
+            <p>Showing {productList.length == 0 ? 0 : 1}-{productList.length} of {productList.length} results</p>
             <Select
               onValueChange={e => {
                 switch (e) {
-                  case "name-asc":
-                    setSort({ kind: "name", order: "asc" });
-                    break;
-                  case "name-desc":
-                    setSort({ kind: "name", order: "desc" });
-                    break;
+                  // case "name-asc":
+                  //   setSort({ kind: "name", order: "asc" });
+                  //   break;
+                  // case "name-desc":
+                  //   setSort({ kind: "name", order: "desc" });
+                  //   break;
                   case "price-asc":
                     setSort({ kind: "price", order: "asc" });
                     break;
@@ -197,8 +141,8 @@ const Products = () => {
                 <SelectValue placeholder="SORT BY" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="name-asc">{"Name (A-Z)"}</SelectItem>
-                <SelectItem value="name-desc">{"Name (Z-A)"}</SelectItem>
+                {/* <SelectItem value="name-asc">{"Name (A-Z)"}</SelectItem>
+                <SelectItem value="name-desc">{"Name (Z-A)"}</SelectItem> */}
                 <SelectItem value="price-asc">
                   {"Price (low - high)"}
                 </SelectItem>
@@ -208,8 +152,8 @@ const Products = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
-            {productList.length &&
+          <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-20">
+            {productList.length ? (
               productList.map(book => (
                 <div key={uuid()} className="flex justify-center">
                   <Card
@@ -220,8 +164,11 @@ const Products = () => {
                     imgUrl={book.image}
                   />
                 </div>
-              ))}
+              ))) : <span></span>}
           </div>
+          {productList.length == 0 && (<div className="w-full">
+            <p className="text-center py-72">No matching result here</p>
+          </div>)}
           <Pagination className="mt-5">
             <PaginationContent>
               <PaginationItem>

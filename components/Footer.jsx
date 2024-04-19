@@ -2,8 +2,8 @@ import React from 'react'
 
 const Footer = ({bgColor}) => {
   return (
-    <footer className={`responsive-layout py-20 flex justify-between bg-[${bgColor}]`}>
-      <div className="w-1/4">
+    <footer className={`responsive-layout py-20 flex flex-wrap justify-between bg-[${bgColor}]`}>
+      <div className="mt-5 md:w-1/3">
         <div className="flex gap-2 font-bold text-xl items-center">
           <img src="/logo-footer.png" alt="" />
           <p>JapBook</p>
@@ -18,7 +18,7 @@ const Footer = ({bgColor}) => {
           <img src="/Youtube.png" alt="" />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-x-8 gap-y-4">
+      <div className="grid grid-cols-3 gap-x-8 gap-y-4 mt-5">
         <div>
           <h4 className="text-[#5C5F6A] mb-6">SUPPORT</h4>
         </div>
@@ -56,7 +56,7 @@ const Footer = ({bgColor}) => {
           <p>Cart</p>
         </div>
       </div>
-      <div>
+      <div className='mt-5'>
         <h4 className="text-[#5C5F6A]">ACCEPTED PAYMENTs</h4>
         <div className="flex gap-2 mt-4">
           <img src="/Mastercard.png" alt="" />

@@ -8,20 +8,19 @@ import { getUserToken } from "@/authentication";
 
 const HomePage = () => {
   const [bookStatus, setBookStatus] = useState("Latest"); // Featured | Latest
-  const [bookList, setBookList] = useState()
+  const [bookList, setBookList] = useState();
   useEffect(() => {
-    const fetchData = async () => {   
-      try { 
-        const userToken = await getUserToken()
+    const fetchData = async () => {
+      try {
+        const userToken = await getUserToken();
         const response = await axios.get(`${be_url}/home`);
-        setBookList(response.data)
+        setBookList(response.data);
+      } catch (e) {
+        console.log(e);
       }
-      catch (e) {
-        console.log(e)
-      }
-    }
-    fetchData()
-  }, [])
+    };
+    fetchData();
+  }, []);
   return (
     <>
       <section className="responsive-layout bg-[url('/welcome_img.jpg')] py-10 bg-cover md:bg-none md:bg-[#F6F6F6] flex md:justify-between md:items-center md:py-20">
@@ -51,32 +50,32 @@ const HomePage = () => {
         />
       </section>
       <section className="responsive-layout flex flex-col items-center py-10 md:py-20 md:flex md:flex-row xl:p-40 md:justify-between gap-10">
-        <div className="w-1/3">
+        <div className="md:w-1/3 flex flex-col items-center">
           <div className="rounded-full bg-[#F6F6F6] w-12 h-12 flex justify-center items-center">
             <img src="/shipping.png" alt="" className="w-6" />
           </div>
           <h2 className="font-bold mt-8 mb-4">Free Shipping</h2>
-          <p className="text-[#5C5F6A]">
+          <p className="text-[#5C5F6A] text-center">
             Upgrade your style today and get FREE shipping on all orders! Don't
             miss out.
           </p>
         </div>
-        <div className="w-1/3">
+        <div className="flex flex-col items-center md:w-1/3">
           <div className="rounded-full bg-[#F6F6F6] w-12 h-12 flex justify-center items-center">
             <img src="/medal.png" alt="" className="w-6" />
           </div>
           <h2 className="font-bold mt-8 mb-4">Satisfaction Guarantee</h2>
-          <p className="text-[#5C5F6A]">
+          <p className="text-[#5C5F6A] text-center">
             Shop confidently with our Satisfaction Guarantee: Love it or get a
             refund.
           </p>
         </div>
-        <div className="w-1/3">
+        <div className="flex flex-col items-center md:w-1/3">
           <div className="rounded-full bg-[#F6F6F6] w-12 h-12 flex justify-center items-center">
             <img src="/secure.png" alt="" className="w-6" />
           </div>
           <h2 className="font-bold mt-8 mb-4">Secure Payment</h2>
-          <p className="text-[#5C5F6A]">
+          <p className="text-[#5C5F6A] text-center">
             Your security is our priority. Your payments are secure with us.
           </p>
         </div>
@@ -141,7 +140,7 @@ const HomePage = () => {
         <img
           src="https://i0.wp.com/jaybarnson.com/wp-content/uploads/2022/04/RascalDoesNotDream.jpg?fit=481%2C671&ssl=1"
           alt=""
-          className="h-80"
+          className="h-80 hidden md:block"
         />
       </section>
       <section className="responsive-layout flex flex-col items-center py-40">
@@ -206,18 +205,18 @@ const HomePage = () => {
           )}
         </div>
       </section>
-      <section className="responsive-layout py-12 bg-[#F6F6F6] flex items-center justify-between">
+      <section className="responsive-layout py-12 bg-[#F6F6F6] flex flex-col lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h2 className="font-bold text-2xl">Join Our Newsletter</h2>
           <p className="text-[#5C5F6A] mt-4">
             We love to surprise our subscribers with occasional gifts
           </p>
         </div>
-        <form className="flex w-1/3 h-12 gap-2">
+        <form className="flex w-1/3 h-12 gap-2 mt-4">
           <input
             type="text"
             placeholder="Your email address"
-            className="grow pl-2 outline-none bg-[#F6F6F6] border-2 px-2 py-1 rounded-md focus:border-[#878A92]"
+            className="grow pl-2 outline-none bg-[#F6F6F6] border-2 px-2 py-0.5 lg:py-1 rounded-md focus:border-[#878A92]"
           />
           <button className="bg-black text-white px-4 rounded">
             Subscribe
