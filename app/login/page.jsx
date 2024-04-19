@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
@@ -9,10 +9,10 @@ import { web_link } from "@/config_var";
 import { useToast } from "@chakra-ui/react";
 
 const Login = () => {
-  const toast = useToast()
-  const [loginForm, setLoginForm] = useState()
+  const toast = useToast();
+  const [loginForm, setLoginForm] = useState();
   const [showPwd, setShowPwd] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
   return (
     <>
       <div className="flex flex-col items-center mb-10 h-full">
@@ -30,10 +30,12 @@ const Login = () => {
             className="w-full flex flex-col grow"
             onSubmit={async e => {
               e.preventDefault();
-              console.log("Submit login form to backend")
+              console.log("Submit login form to backend");
               try {
-              const isLoggedIn = await handleLogin(loginForm);
-              if (isLoggedIn) router.push("/");
+                console.log("inside try block")
+                const isLoggedIn = await handleLogin(loginForm);
+                console.log(isLoggedIn)
+                if (isLoggedIn) router.push("/");
               } catch (e) {
                 toast({
                   title: "Incorrect email or password",
