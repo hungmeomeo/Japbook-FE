@@ -17,7 +17,7 @@ const Navbar = () => {
     <nav className="flex items-center py-5 responsive-layout shadow-md justify-between">
       <div className="flex items-center gap-2 font-bold text-2xl">
         <img src="/logo.png" alt="" />
-        JapBook
+        JPRead
       </div>
       <div className="hidden lg:flex xl:flex items-center flex-between w-full">
         <ul className="flex pl-32 font-medium gap-6 grow text-[#5C5F6A]">

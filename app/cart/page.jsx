@@ -22,7 +22,8 @@ const Cart = () => {
   const [cartList, setCartList] = useState([]);
   const [updateCart, setUpdateCart] = useState(1);
   const [customerInfo, setCustomerInfo] = useState(null);
-  const [payingMethod, setPayingMethod] = useState();
+  const [payingMethod, setPayingMethod] = useState(); // cod or vnpay
+  const [paymentMethod, setPaymentMethod] = useState("VNBANK");
   let totalPrice = 0;
   for (let product of cartList) {
     totalPrice += product.product.price * product.quantity;
@@ -176,6 +177,46 @@ const Cart = () => {
                 </div>
               </RadioGroup>
             </div>
+            <div className={`mt-4 ${payingMethod !== "vnpay" && "hidden"}`}>
+              <label htmlFor="" className="text-lg font-semibold">
+                Paying Option
+              </label>
+              <div className="flex justify-between mt-2 w-fit gap-4">
+                <div
+                  className={`flex flex-col justify-between items-center w-24 border-2 rounded-lg p-2 ${
+                    paymentMethod == "VNBANK" && "bg-gray-100"
+                  }`}
+                  onClick={() => {
+                    setPaymentMethod("VNBANK");
+                  }}
+                >
+                  <div className="h-1/2 flex items-center">
+                    <img
+                      src="https://vtcpay.vn/media2/Upload/Images/news/CMS_Paygate/Image/201602/a1_22022016114439.png"
+                      alt=""
+                    />
+                  </div>
+                  <p className="text-center">National Bank</p>
+                </div>
+                <div
+                  className={`flex flex-col justify-between items-center w-24 border-2 rounded-lg p-2 ${
+                    paymentMethod == "INTCARD" && "bg-gray-100"
+                  }`}
+                  onClick={() => {
+                    setPaymentMethod("INTCARD");
+                  }}
+                >
+                  <div className="h-1/2 flex items-center">
+                    <img
+                      src="https://paymentsnext.com/wp-content/uploads/2018/10/Visa_Mastercard_Logo.png"
+                      alt=""
+                      className="h-full"
+                    />
+                  </div>
+                  <p className="text-center">Inter Card</p>
+                </div>
+              </div>
+            </div>
           </section>
         )}
         <section className="border-2 p-4 h-fit mt-4 lg:mt-0 rounded-lg xl:w-[400px] lg:w-[360px]">
@@ -198,9 +239,21 @@ const Cart = () => {
             <p className="font-semibold">{totalPrice + shippingFee + tax} đ</p>
           </div>
           <button
-            onClick={() => {
+            onClick={async () => {
               if (orderState === "cart") setOrderState("ship");
-              else if (orderState === "ship" && payingMethod === "vnpay") router.push(`/cart/vnpay?total=${totalPrice+shippingFee+tax}`)
+              else if (orderState === "ship" && payingMethod === "vnpay") {
+                try {
+                  const paymentUrl = await axios.post(
+                    `${be_url}/payment/create_payment_url`,
+                    { amount: totalPrice + shippingFee + tax, bankCode: paymentMethod }
+                  );
+                  console.log(paymentUrl.data);
+                  router.replace(paymentUrl.data);
+                } catch(e) {
+                  console.log(e)
+                }
+              }
+                
             }}
             className="w-full text-white bg-black py-3 rounded-md font-medium"
           >
