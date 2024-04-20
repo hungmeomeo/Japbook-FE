@@ -3,7 +3,7 @@
 import Footer from "@/components/Footer";
 import { Input } from "@chakra-ui/react";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Textarea } from "@chakra-ui/react";
 import axios from "axios";
 import { web_link } from "@/config_var";
@@ -55,7 +55,7 @@ const VnPayMethod = () => {
   }, []);
 
   return (
-    <>
+    <Suspense>
       <main className="responsive-layout py-10">
         <h1 className="text-3xl font-bold text-center">Payment Information</h1>
         <form
@@ -147,7 +147,7 @@ const VnPayMethod = () => {
         </form>
       </main>
       <Footer bgColor={"#F6F6F6"} />
-    </>
+    </Suspense>
   );
 };
 
