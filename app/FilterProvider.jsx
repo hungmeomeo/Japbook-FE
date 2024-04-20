@@ -23,6 +23,7 @@ const filterReducer = (filter, action) => {
         oldGenreFilter.push(action.newGenre);
       return {
         ...filter,
+        name: "",
         priceRange: [...filter.priceRange],
         genre: [...oldGenreFilter],
       };
@@ -30,6 +31,7 @@ const filterReducer = (filter, action) => {
     case "FilterPrice": {
       return {
         ...filter,
+        name: "",
         genre: [...filter.genre],
         priceRange: action.priceRange,
       };
@@ -37,6 +39,7 @@ const filterReducer = (filter, action) => {
     case "RemovePriceRange": {
       return {
         ...filter,
+        name: "",
         genre: [...filter.genre],
         priceRange: [],
       };
@@ -45,12 +48,14 @@ const filterReducer = (filter, action) => {
       if (filter.bookType === action.name) {
         return {
           bookType: "",
+          name: "",
           genre: [...filter.genre],
           priceRange: [...filter.priceRange],
         };
       } else {
         return {
           ...filter,
+          name: "",
           priceRange: [...filter.priceRange],
           genre: filter.genre.filter(ele => ele !== action.name),
         };
