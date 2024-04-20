@@ -34,6 +34,7 @@ const Navbar = () => {
           <form
             onSubmit={e => {
               e.preventDefault();
+              router.push('/products')
               setBookFilter({ type: "SearchBookName", bookName: searchBook });
               setSearchBook("");
             }}
@@ -44,6 +45,7 @@ const Navbar = () => {
               type="text"
               placeholder="Search products"
               className="pl-2 outline-none "
+              value={searchBook}
               onChange={e => {
                 setSearchBook(e.target.value);
               }}
