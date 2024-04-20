@@ -226,7 +226,7 @@ const HomePage = () => {
             try {
               const noti = await axios.post(`${web_link}/api/send-email`, {
                 to: mail,
-                subject: "JapRead",
+                subject: "JPBook",
                 text: "Thank you for subscribing to our shop You will be notified about our news (new arrivals, sales, etc..) every one months. You can unsubscribe anytime by clicking the subscribe button again. We hope you get the best experience when shopping at our store. We are looking forward to serving you",
               });
               setMail("");
