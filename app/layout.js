@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Providers } from './providers'
 import FilterProvider from "./FilterProvider";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
           </FilterProvider>
         </Providers>
       </body>
+      <GoogleAnalytics gaId="G-1C1R6D73YD" />
     </html>
   );
 }
