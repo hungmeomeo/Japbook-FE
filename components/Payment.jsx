@@ -8,7 +8,7 @@ import { Textarea } from "@chakra-ui/react";
 import axios from "axios";
 import { web_link } from "@/config_var";
 import moment from "moment";
-import { sha256 } from "js-sha256";
+import { sha512 } from "js-sha512";
 
 async function getIPFromAmazon() {
   const request = await axios.get("https://checkip.amazonaws.com/");
@@ -18,30 +18,45 @@ async function getIPFromAmazon() {
 
 const Payment = () => {
   const searchParam = useSearchParams();
-  const totalPrice = searchParam.get("total");
+  const totalPrice = parseInt(searchParam.get("total"));
   let formattedDate = moment().format("yyyyMMDDHHmmss");
   let expireDate = moment().add(15, "minute").format("yyyyMMDDHHmmss");
   let txnRef = formattedDate.slice(4);
-  console.log(formattedDate);
-  console.log(txnRef);
-  console.log(expireDate);
-  const query = {
-    vnpVer: "2.1.0",
-    vnpCmd: "pay",
-    vnpTmnCode: "96SYYDBH",
-    vnpAmt: totalPrice,
-    vnpIp: "",
-    // vnpBank: "VNPAYQR",
-    vnpCreateDate: formattedDate,
-    vnpCurr: "VND",
-    vnpLang: "vn",
-    vnpOrderInf: "",
-    vnpOrderType: 150000,
-    vnpRetUrl: `${web_link}/cart/success`,
-    vnpExpDate: expireDate,
-    vnpTxnRef: txnRef,
-    vnpSecureHash: sha256("CBSODKTUGFGPAZJBUSMTCBJZQXWQOEVE"),
-  };
+  const hashKey = "CBSODKTUGFGPAZJBUSMTCBJZQXWQOEVE";
+//   const query = {
+//     vnpVer: "2.1.0",
+//     vnpCmd: "pay",
+//     vnpTmnCode: "96SYYDBH",
+//     vnpAmt: totalPrice * 100,
+//     vnpIp: "",
+//     vnpBank: "VNPAYQR",
+//     vnpCreateDate: parseInt(formattedDate),
+//     vnpCurr: "VND",
+//     vnpLang: "vn",
+//     vnpOrderInf: "",
+//     vnpOrderType: 150000,
+//     vnpRetUrl: `${web_link}/cart/success`,
+//     vnpExpDate: parseInt(expireDate),
+//     vnpTxnRef: txnRef,
+//     vnpSecureHash: "CBSODKTUGFGPAZJBUSMTCBJZQXWQOEVE",
+//   };
+
+    const query = {
+      vnpVer: "2.1.0",
+      vnpCmd: "pay",
+      vnpTmnCode: "96SYYDBH",
+      vnpAmt: totalPrice * 100,
+      vnpIp: "",
+      vnpBank: "VNPAYQR",
+      vnpCreateDate: parseInt(formattedDate),
+      vnpCurr: "VND",
+      vnpLang: "vn",
+      vnpOrderInf: "",
+      vnpOrderType: 150000,
+      vnpRetUrl: `${web_link}/cart/success`,
+      vnpExpDate: parseInt(expireDate),
+      vnpTxnRef: txnRef,
+    };
 
   const [payQuery, setPayQuery] = useState(query);
 
@@ -64,12 +79,35 @@ const Payment = () => {
           onSubmit={async e => {
             e.preventDefault();
             console.log(payQuery);
-            const payUrl = `https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=${payQuery.vnpAmt}&vnp_Command=${payQuery.vnpCmd}&vnp_CreateDate=${payQuery.vnpCreateDate}&vnp_CurrCode=${payQuery.vnpCurr}&vnp_ExpireDate=${payQuery.vnpExpDate}&vnp_IpAddr=${payQuery.vnpIp}&vnp_Locale=${payQuery.vnpLang}&vnp_OrderInfo=${payQuery.vnpOrderInf}&vnp_OrderType=${payQuery.vnpOrderType}&vnp_ReturnUrl=${payQuery.vnpRetUrl}&vnp_TmnCode=${payQuery.vnpTmnCode}&vnp_TxnRef=${payQuery.vnpTxnRef}&vnp_Version=${payQuery.vnpVer}&vnp_SecureHash=${payQuery.vnpSecureHash}`;
+            let strObj = String(payQuery.vnpAmt) + payQuery.vnpBank + payQuery.vnpCmd + String(payQuery.vnpCreateDate) + payQuery.vnpCurr + payQuery.vnpIp + payQuery.vnpLang + payQuery.vnpOrderInf + String(payQuery.vnpOrderType) + payQuery.vnpRetUrl + payQuery.vnpTmnCode + payQuery.vnpTxnRef + payQuery.vnpVer
+            console.log("string code", strObj)
+            const crypto = require("crypto");
+            let token = crypto
+              .createHmac("sha512", "CBSODKTUGFGPAZJBUSMTCBJZQXWQOEVE")
+              .update(strObj)
+              .digest("hex")
+            //   .toString("hex");
+            console.log(token)
+            const payUrl = `https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=${
+              payQuery.vnpAmt
+            }&vnp_Command=${payQuery.vnpCmd}&vnp_CreateDate=${
+              payQuery.vnpCreateDate
+            }&vnp_CurrCode=${payQuery.vnpCurr}&vnp_ExpireDate=${
+              payQuery.vnpExpDate
+            }&vnp_IpAddr=${payQuery.vnpIp}&vnp_Locale=${
+              payQuery.vnpLang
+            }&vnp_OrderInfo=${payQuery.vnpOrderInf}&vnp_OrderType=${
+              payQuery.vnpOrderType
+            }&vnp_ReturnUrl=${payQuery.vnpRetUrl}&vnp_TmnCode=${
+              payQuery.vnpTmnCode
+            }&vnp_TxnRef=${payQuery.vnpTxnRef}&vnp_Version=${
+              payQuery.vnpVer
+            }&vnp_SecureHash=${token}`;
             console.log(payUrl);
             window.location.replace(payUrl);
           }}
         >
-          {/* <div>
+          <div>
             <label htmlFor="" className="text-lg font-semibold">
               Paying Option
             </label>
@@ -121,7 +159,7 @@ const Payment = () => {
                 <p className="text-center">Inter Card</p>
               </div>
             </div>
-          </div> */}
+          </div>
           <div className="mt-4">
             <label htmlFor="" className="text-lg font-semibold">
               Total Price
