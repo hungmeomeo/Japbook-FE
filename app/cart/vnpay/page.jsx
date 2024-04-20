@@ -66,7 +66,7 @@ const VnPayMethod = () => {
             console.log(payQuery);
             const payUrl = `https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=${payQuery.vnpAmt}&vnp_Command=${payQuery.vnpCmd}&vnp_CreateDate=${payQuery.vnpCreateDate}&vnp_CurrCode=${payQuery.vnpCurr}&vnp_ExpireDate=${payQuery.vnpExpDate}&vnp_IpAddr=${payQuery.vnpIp}&vnp_Locale=${payQuery.vnpLang}&vnp_OrderInfo=${payQuery.vnpOrderInf}&vnp_OrderType=${payQuery.vnpOrderType}&vnp_ReturnUrl=${payQuery.vnpRetUrl}&vnp_TmnCode=${payQuery.vnpTmnCode}&vnp_TxnRef=${payQuery.vnpTxnRef}&vnp_Version=${payQuery.vnpVer}&vnp_SecureHash=${payQuery.vnpSecureHash}`;
             console.log(payUrl)
-            // window.location.replace(payUrl);
+            window.location.replace(payUrl);
           }}
         >
           {/* <div>
