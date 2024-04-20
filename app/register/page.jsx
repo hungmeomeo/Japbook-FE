@@ -6,7 +6,8 @@ import React, { useState } from "react";
 import { be_url, web_link } from "@/config_var";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Navbar from "@/components/Navbar";
+import { useToast } from "@chakra-ui/react";
+
 
 
 
@@ -18,7 +19,7 @@ const Register = () => {
   });
   const [showPwd, setShowPwd] = useState(false);
   const router = useRouter()
-  console.log(registerForm)
+  const toast = useToast()
   return (
     <>
       <div className="flex flex-col items-center mb-10">
@@ -42,10 +43,17 @@ const Register = () => {
                   password: registerForm.password,
                   email: registerForm.email,
                 });
+                router.push("/login");
               } catch (e) {
                 console.log(e);
+                toast({
+                  title: "Email already exist",
+                  description: "Please choose another mail to register",
+                  status: "error",
+                  duration: 1000,
+                  isClosable: true,
+                });
               }
-              router.push("/login");
             }}
           >
             <label htmlFor="email" className="">
