@@ -6,7 +6,7 @@ const Footer = ({bgColor}) => {
       <div className="mt-5 md:w-1/3">
         <div className="flex gap-2 font-bold text-xl items-center">
           <img src="/logo-footer.png" alt="" />
-          <p>JapBook</p>
+          <p>JPBook</p>
         </div>
         <p className="text-[#5C5F6A] mt-4">
           This is an ecommerce website used for the project in the ecommerce

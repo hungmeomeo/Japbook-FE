@@ -8,8 +8,8 @@ import { getUserToken } from "@/authentication";
 import { UserIdContext } from "@/context/Context";
 
 const HomePage = () => {
-  const uid = useContext(UserIdContext)
-  console.log(uid)
+  const uid = useContext(UserIdContext);
+  console.log(uid);
   const [bookStatus, setBookStatus] = useState("Latest"); // Featured | Latest
   const [bookList, setBookList] = useState();
   const [mail, setMail] = useState("");
@@ -124,7 +124,9 @@ const HomePage = () => {
       </section>
       <section className="responsive-layout flex justify-between bg-[#F6F6F6]">
         <div className="my-16">
-          <h2 className="font-bold text-2xl">Browse Our Fashion Paradise</h2>
+          <h2 className="font-bold text-2xl">
+            Browse Our Light Novel Paradise
+          </h2>
           <p className="text-[#5C5F6A] mt-2 mb-7">
             Step into a world of fantasy and explore our diverse collection of
             book categories
@@ -225,9 +227,9 @@ const HomePage = () => {
               const noti = await axios.post(`${web_link}/api/send-email`, {
                 to: mail,
                 subject: "JapRead",
-                text: "Thank you for subscribing to our shop You will be notified about our news (new arrivals, sales, etc..) every one months. You can unsubscribe anytime if you think that this annoys you by clicking the subscribe button again. Hope you get the best experience when shopping at our store. We are looking forward to serving you\nBest Wishes \nJapRead team",
+                text: "Thank you for subscribing to our shop You will be notified about our news (new arrivals, sales, etc..) every one months. You can unsubscribe anytime by clicking the subscribe button again. We hope you get the best experience when shopping at our store. We are looking forward to serving you",
               });
-              
+              setMail("");
               console.log(noti.data);
             } catch (e) {
               console.log(e);
@@ -238,7 +240,9 @@ const HomePage = () => {
             type="text"
             value={mail}
             placeholder="Your email address"
-            onChange={e => setMail(e.target.value)}
+            onChange={e => {
+              setMail(e.target.value);
+            }}
             className="grow pl-2 outline-none bg-[#F6F6F6] border-2 px-2 py-0.5 lg:py-1 rounded-md focus:border-[#878A92]"
           />
           <button className="bg-black text-white px-4 rounded">
