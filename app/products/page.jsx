@@ -42,13 +42,9 @@ const Products = () => {
 
   mergeArray = [].concat(filter.genre);
 
-  useEffect(() => {
-    const createGenreList = async () => {
-      const fetchList = await axios.get(`${be_url}/genre`);
-      setList(fetchList.data);
-    };
-    createGenreList();
+  
 
+  useEffect(() => {
     const getFilterProducts = async () => {
       console.log("useEffect filter is called");
       try {
@@ -75,7 +71,7 @@ const Products = () => {
     <>
       <Navigation path={["Ecommerce", "Products"]} bgColor={"#F6F6F6"} />
       <section className="responsive-layout my-10 flex flex-col items-center md:flex-row md:items-start gap-4">
-        <Filter genreList={list} />
+        <Filter />
         <main className="w-full">
           <p className="font-semibold">Applied Filters:</p>
           <div className="w-full flex flex-wrap gap-2 mt-4">

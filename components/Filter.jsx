@@ -14,8 +14,16 @@ import RangeSliderUI from './RangeSlider';
 
 
 
-const Filter = ({genreList}) => {
-  const dispatch = useContext(FilterDispatch)
+const Filter = () => {
+  // const dispatch = useContext(FilterDispatch)
+  const [genreList, setList] = useState([])
+  useEffect(() => {
+    const createGenreList = async () => {
+      const fetchList = await axios.get(`${be_url}/genre`);
+      setList(fetchList.data);
+    };
+    createGenreList();
+  }, []);
   return (
     <div className="w-3/5 md:w-1/4 bg-white border-2 p-4 rounded-md flex flex-col gap-4 h-fit md:sticky top-5">
       {/* <div>
