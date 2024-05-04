@@ -1,13 +1,15 @@
 # Introduction
 
-This is an ecommerce website built for the course CO3007 
+This is an ecommerce website built for the course CO3027 
+
+Backend Link: [https://github.com/Yukinaa1q/EcomBE](https://github.com/Yukinaa1q/EcomBE)
 
 ## Team Member
 
-| Name              | Role                                                          | 
-|:------------------|:--------------------------------------------------------------|
-|Kiều Tiến Thành    |Design UI and implementing the front-end, designing database   |
-|Lý Trần Phước Trí  |Design and implementing the back-end and database              |
+| Name              | Role                                                             | 
+|:------------------|:-----------------------------------------------------------------|
+|Kiều Tiến Thành    |Designing UI, database and implementing the front-end             |
+|Lý Trần Phước Trí  |Designing and implementing the back-end and database              |
 
 # Getting Started
 
