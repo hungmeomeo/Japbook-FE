@@ -11,19 +11,21 @@ import {
 } from "@/components/ui/select";
 import Combobox from './Combobox';
 import RangeSliderUI from './RangeSlider';
+import axios from 'axios';
+import { be_url } from '@/config_var';
 
 
 
 const Filter = () => {
   // const dispatch = useContext(FilterDispatch)
-  const [genreList, setList] = useState([])
-  useEffect(() => {
-    const createGenreList = async () => {
-      const fetchList = await axios.get(`${be_url}/genre`);
-      setList(fetchList.data);
-    };
-    createGenreList();
-  }, []);
+  // const [genreList, setList] = useState([])
+  // useEffect(() => {
+  //   const createGenreList = async () => {
+  //     const fetchList = await axios.get(`${be_url}/genre`);
+  //     setList(fetchList.data);
+  //   };
+  //   createGenreList();
+  // }, []);
   return (
     <div className="w-3/5 md:w-1/4 bg-white border-2 p-4 rounded-md flex flex-col gap-4 h-fit md:sticky top-5">
       {/* <div>
@@ -44,7 +46,7 @@ const Filter = () => {
       </div> */}
       <div>
         <p className="font-semibold mb-2">Genre</p>
-        <Combobox list={genreList}/>
+        <Combobox/>
       </div>
       <div>
         <p className="font-semibold mb-2">Price</p>

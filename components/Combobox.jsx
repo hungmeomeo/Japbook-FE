@@ -18,20 +18,20 @@ import { be_url } from "@/config_var";
 //   "Shoujo",
 // ];
 
-export default function Combobox({list}) {
+export default function Combobox() {
   const dispatch = useContext(FilterDispatch);
   const [isOpen, setOpen] = useState(false);
-  const [genreList, setGenreList] = useState(list);
+  const [defaultList, setDefList] = useState()
+  const [genreList, setGenreList] = useState(defaultList);
   const [searchValue, setSearchValue] = useState("");
-  // useEffect(() => {
-  //   const createGenreList = async () => {
-  //     const fetchList = await axios.get(`${be_url}/genre`)
-  //     console.log(fetchList.data)
-  //     setList(fetchList.data)
-  //     setGenreList(list)
-  //   }
-  //   createGenreList()
-  // }, [])
+  useEffect(() => {
+    const createGenreList = async () => {
+      const fetchList = await axios.get(`${be_url}/genre`)
+      setDefList(fetchList.data)
+      setGenreList(fetchList.data)
+    }
+    createGenreList()
+  }, [])
   return (
     <div className="relative">
       <button
@@ -40,7 +40,7 @@ export default function Combobox({list}) {
           let fn = e => {
             if (e.target.nodeName !== "LI" && e.target.nodeName !== "INPUT") {
               setOpen(false);
-              setGenreList(list);
+              setGenreList(defaultList);
               document.removeEventListener("click", fn);
             }
           };
@@ -67,7 +67,7 @@ export default function Combobox({list}) {
             onInput={e => {
               const searchKey = e.target.value;
               setSearchValue(searchKey);
-              const newGenreList = list.filter(genre =>
+              const newGenreList = defaultList.filter(genre =>
                 genre.toLowerCase().startsWith(searchKey.toLowerCase())
               );
               setGenreList(newGenreList);
@@ -78,7 +78,7 @@ export default function Combobox({list}) {
               key={uuid()}
               className="hover:bg-[#F6F6F6] cursor-pointer hover:rounded-md px-4 py-2"
               onClick={() => {
-                setGenreList(list);
+                setGenreList(defaultList);
                 setSearchValue("");
                 dispatch({ type: "FilterGenre", newGenre: genre });
               }}
