@@ -9,6 +9,7 @@ import Review from "@/components/Review";
 import axios from "axios";
 import { be_url } from "@/config_var";
 import { useToast } from "@chakra-ui/react";
+import Cookies from "js-cookie";
 
 const page = ({ params }) => {
   const [qty, setQty] = useState(1);
@@ -118,8 +119,7 @@ const page = ({ params }) => {
               onClick={async () => {
                 if (book && book.status == "InStock") {
                   try {
-                    const userToken = await getUserToken();
-                    const userId = await getUserId();
+                    const userId = Cookies.get("userId")
                     const addProductToCart = await axios.post(
                       `${be_url}/user/${userId}/${book._id}`,
                       { quantity: qty }

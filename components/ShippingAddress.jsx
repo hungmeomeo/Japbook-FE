@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { be_url } from "@/config_var";
+import Cookies from "js-cookie";
 
 const ShippingAddress = () => {
   const toast = useToast()
@@ -24,6 +25,7 @@ const ShippingAddress = () => {
   console.log(shippingForm);
   useEffect(() => {
     const getCusInfo = async () => {
+      const uid = Cookies.get("userId");
       const fetchCus = await axios.get(`${be_url}/user/${uid}/shipping`);
       fetchCus.data.length &&
         setShippingForm({
@@ -45,7 +47,7 @@ const ShippingAddress = () => {
         onSubmit={async (e) => {
           e.preventDefault()
           try {
-            const uid = await getUserId()
+            const uid = Cookies.get('userId')
             const updateCusInfo = await axios.post(`${be_url}/user/${uid}/shipping/update`, {
               address: shippingForm.address, 
               city: shippingForm.city,

@@ -31,16 +31,27 @@ const Login = () => {
             className="w-full flex flex-col grow"
             onSubmit={async e => {
               e.preventDefault();
-              console.log("Submit login form to backend");
+              console.log("Submit login form to backend ", loginForm);
               try {
                 console.log("inside try block")
                 const sendLogin = await axios.post(`${be_url}/auth/login`, {
                   email: loginForm.email,
                   password: loginForm.password,
                 });
+                console.log(sendLogin)
                 console.log(sendLogin.data.userid)
-                Cookies.set("userId", sendLogin.data.userid)
-                router.push('/')
+                if (sendLogin.data.success) {
+                  Cookies.set("userId", sendLogin.data.userid)
+                  router.push('/')
+                } else {
+                  toast({
+                    title: "Incorrect email or password",
+                    description: "Please check your account",
+                    status: "error",
+                    duration: 1000,
+                    isClosable: true,
+                  });
+                }
               } catch (e) {
                 console.log(e)
                 toast({

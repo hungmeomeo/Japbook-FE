@@ -32,6 +32,7 @@ const Cart = () => {
   useEffect(() => {
     const getCartList = async () => {
       try {
+        const uid = Cookies.get("userId");
         const getCart = await axios.get(`${be_url}/user/${uid}`);
         setCartList(getCart.data.cart);
       } catch (e) {
@@ -42,6 +43,7 @@ const Cart = () => {
 
     const getCustomerInfo = async () => {
       try {
+        const uid = Cookies.get("userId")
         const fetchCustomerInfo = await axios.get(
           `${be_url}/user/${uid}/shipping`
         );
