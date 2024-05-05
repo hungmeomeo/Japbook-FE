@@ -4,12 +4,14 @@ import React, { useEffect, useState } from "react";
 import { Input } from "@chakra-ui/react";
 import axios from "axios";
 import { be_url } from "@/config_var";
+import Cookies from "js-cookie";
 
 const SummaryProduct = ({ productInfo, updateCart}) => {
   const [qty, setQty] = useState(productInfo.quantity);
   useEffect(() => {
     const updateCartProduct = async () => {
       try {
+        const userId = Cookies.get("userId")
         const updateProductInCart = await axios.put(
           `${be_url}/user/${userId}/${productInfo.product._id}/update`,
           { quantity: qty }
@@ -52,7 +54,7 @@ const SummaryProduct = ({ productInfo, updateCart}) => {
         <button
           onClick={async e => {
             try {
-              const uid = await getUserId()
+              const uid = Cookies.get("userId")
               const deleteProductInCart = await axios.delete(`${be_url}/user/${uid}/${productInfo.product._id}`)
               // console.log("You delete this product ", productInfo.product)
               updateCart(old => (old + 1) % 2)
