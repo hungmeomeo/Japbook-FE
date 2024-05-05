@@ -40,13 +40,14 @@ const Products = () => {
   let mergeArray = null;
 
   mergeArray = [].concat(filter.genre);
-
+  
   useEffect(() => {
+    setPage(1)
     const getFilterProducts = async () => {
       console.log("useEffect filter is called");
       try {
         const fetchFilterProducts = await axios.get(
-          `${be_url}/filterProducts?name=${filter.name}&price_start=${filter.priceRange[0]}&price_end=${filter.priceRange[1]}&genre_type=${filter.genre}&order=${sort.order}&page=${page}`
+          `${be_url}/filterProducts?name=${filter.name}&price_start=${filter.priceRange[0]}&price_end=${filter.priceRange[1]}&genre_type=${filter.genre}&order=${sort.order}&page=1`
         );
         console.log(fetchFilterProducts)
         const lastEle = fetchFilterProducts.data.pop()
@@ -58,7 +59,6 @@ const Products = () => {
       }
     };
     getFilterProducts();
-    setPage(1)
   }, [filter, sort]);
 
   useEffect(() => {
