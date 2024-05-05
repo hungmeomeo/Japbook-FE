@@ -43,7 +43,7 @@ const Cart = () => {
 
     const getCustomerInfo = async () => {
       try {
-        const uid = Cookies.get("userId")
+        const uid = Cookies.get("userId");
         const fetchCustomerInfo = await axios.get(
           `${be_url}/user/${uid}/shipping`
         );
@@ -58,8 +58,7 @@ const Cart = () => {
     getCustomerInfo();
   }, [updateCart]);
 
-
-  console.log(payingMethod)
+  console.log(payingMethod);
 
   return (
     <>
@@ -244,15 +243,19 @@ const Cart = () => {
                 try {
                   const paymentUrl = await axios.post(
                     `${be_url}/payment/create_payment_url`,
-                    { amount: totalPrice + shippingFee + tax, bankCode: paymentMethod }
+                    {
+                      amount: totalPrice + shippingFee + tax,
+                      bankCode: paymentMethod,
+                    }
                   );
                   console.log(paymentUrl.data);
                   router.replace(paymentUrl.data);
-                } catch(e) {
-                  console.log(e)
+                } catch (e) {
+                  console.log(e);
                 }
+              } else {
+                router.push('/cart/success')
               }
-                
             }}
             className="w-full text-white bg-black py-3 rounded-md font-medium"
           >
