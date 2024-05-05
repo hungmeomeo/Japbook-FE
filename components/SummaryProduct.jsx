@@ -4,15 +4,12 @@ import React, { useEffect, useState } from "react";
 import { Input } from "@chakra-ui/react";
 import axios from "axios";
 import { be_url } from "@/config_var";
-import { getUserId, getUserToken } from "@/authentication";
 
 const SummaryProduct = ({ productInfo, updateCart}) => {
   const [qty, setQty] = useState(productInfo.quantity);
   useEffect(() => {
     const updateCartProduct = async () => {
       try {
-        const userToken = await getUserToken();
-        const userId = await getUserId();
         const updateProductInCart = await axios.put(
           `${be_url}/user/${userId}/${productInfo.product._id}/update`,
           { quantity: qty }

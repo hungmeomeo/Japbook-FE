@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { be_url } from "@/config_var";
-import { getUserId } from "@/authentication";
 
 const ShippingAddress = () => {
   const toast = useToast()
@@ -25,7 +24,6 @@ const ShippingAddress = () => {
   console.log(shippingForm);
   useEffect(() => {
     const getCusInfo = async () => {
-      const uid = await getUserId();
       const fetchCus = await axios.get(`${be_url}/user/${uid}/shipping`);
       fetchCus.data.length &&
         setShippingForm({

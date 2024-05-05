@@ -8,9 +8,7 @@ import { v4 as uuid } from "uuid";
 import Review from "@/components/Review";
 import axios from "axios";
 import { be_url } from "@/config_var";
-import { getUserId, getUserToken } from "@/authentication";
 import { useToast } from "@chakra-ui/react";
-import Navbar from "@/components/Navbar";
 
 const page = ({ params }) => {
   const [qty, setQty] = useState(1);

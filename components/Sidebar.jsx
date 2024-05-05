@@ -1,6 +1,5 @@
 'use client'
 
-import { handleLogout } from "@/authentication";
 import { Divider } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";

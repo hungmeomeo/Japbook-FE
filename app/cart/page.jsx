@@ -10,7 +10,6 @@ import { Input } from "@chakra-ui/react";
 import { useEffect } from "react";
 import axios from "axios";
 import { be_url, web_link } from "@/config_var";
-import { getUserId } from "@/authentication";
 import { useRouter } from "next/navigation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Cookies from "js-cookie";
@@ -33,7 +32,6 @@ const Cart = () => {
   useEffect(() => {
     const getCartList = async () => {
       try {
-        const uid = await getUserId();
         const getCart = await axios.get(`${be_url}/user/${uid}`);
         setCartList(getCart.data.cart);
       } catch (e) {
@@ -44,7 +42,6 @@ const Cart = () => {
 
     const getCustomerInfo = async () => {
       try {
-        const uid = Cookies.get("userId");
         const fetchCustomerInfo = await axios.get(
           `${be_url}/user/${uid}/shipping`
         );

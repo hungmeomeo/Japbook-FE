@@ -1,6 +1,5 @@
 "use client";
 
-import { getUserId } from "@/authentication";
 import Detail from "@/components/Detail";
 import Navigation from "@/components/Navigation";
 import SetPassword from "@/components/SetPassword";

@@ -5,7 +5,6 @@ import { Textarea } from "@chakra-ui/react";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
 import { be_url } from "@/config_var";
-import { getUserId } from "@/authentication";
 import Cookies from "js-cookie";
 
 const Review = ({ bookReviews, bookInfo, setReloadPage }) => {
