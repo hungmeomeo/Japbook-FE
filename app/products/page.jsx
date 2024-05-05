@@ -27,43 +27,64 @@ import {
 import { be_url, web_link } from "@/config_var";
 import axios from "axios";
 
-const totalProduct = 84;
 
 const Products = () => {
   const filter = useContext(FilterState);
   const dispatch = useContext(FilterDispatch)
-  const [page, setPage] = useState(3);
+  const [page, setPage] = useState(1);
+  const [totalProduct, setTotalProduct] = useState(0)
   const [sort, setSort] = useState({ kind: "price", order: "asc" }); // Kind: name | price, order: asc | desc
   const [productList, setProductList] = useState([]);
-  const [list, setList] = useState();
-  const productPerPage = 12;
+  const productPerPage = 9;
   const finalPage = Math.ceil(totalProduct / productPerPage);
   let mergeArray = null;
 
   mergeArray = [].concat(filter.genre);
-
-  
 
   useEffect(() => {
     const getFilterProducts = async () => {
       console.log("useEffect filter is called");
       try {
         const fetchFilterProducts = await axios.get(
-          `${be_url}/filterProducts?name=${filter.name}&price_start=${filter.priceRange[0]}&price_end=${filter.priceRange[1]}&genre_type=${filter.genre}&order=${sort.order}`
+          `${be_url}/filterProducts?name=${filter.name}&price_start=${filter.priceRange[0]}&price_end=${filter.priceRange[1]}&genre_type=${filter.genre}&order=${sort.order}&page=${page}`
         );
-        // console.log(fetchFilterProducts);
+        console.log(fetchFilterProducts)
+        const lastEle = fetchFilterProducts.data.pop()
+        console.log(lastEle)
         setProductList(fetchFilterProducts.data);
+        setTotalProduct(lastEle.totalFilteredBook)
       } catch (e) {
         console.log(e);
       }
     };
     getFilterProducts();
+    setPage(1)
   }, [filter, sort]);
 
+  useEffect(() => {
+    const getFilterProducts = async () => {
+      console.log("useEffect filter is called");
+      try {
+        const fetchFilterProducts = await axios.get(
+          `${be_url}/filterProducts?name=${filter.name}&price_start=${filter.priceRange[0]}&price_end=${filter.priceRange[1]}&genre_type=${filter.genre}&order=${sort.order}&page=${page}`
+        );
+        console.log(fetchFilterProducts);
+        const lastEle = fetchFilterProducts.data.pop();
+        console.log(lastEle);
+        setProductList(fetchFilterProducts.data);
+        setTotalProduct(lastEle.totalFilteredBook);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getFilterProducts();
+  }, [page]);
 
-  // console.log("Filter dispatch in product page ", filter);
-  // console.log("Genre list to sort ", list)
-  // console.log("sort order", sort)
+
+  console.log("Total Product: ", totalProduct)
+  console.log("Product/page: ", productPerPage)
+  console.log("Final page: ", finalPage)
+  console.log("Current page: ", page)
 
 
 
@@ -109,7 +130,13 @@ const Products = () => {
             )}
           </div>
           <div className="flex justify-between items-center mt-4">
-            <p>Showing {productList.length == 0 ? 0 : 1}-{productList.length} of {productList.length} results</p>
+            <p>
+              Showing {(page - 1) * productPerPage + 1}-
+              {page * productPerPage > totalProduct
+                ? totalProduct
+                : page * productPerPage}{" "}
+              of {totalProduct} results
+            </p>
             <Select
               onValueChange={e => {
                 switch (e) {
@@ -155,11 +182,16 @@ const Products = () => {
                     imgUrl={book.image}
                   />
                 </div>
-              ))) : <span></span>}
+              ))
+            ) : (
+              <span></span>
+            )}
           </div>
-          {productList.length == 0 && (<div className="w-full">
-            <p className="text-center py-72">No matching result here</p>
-          </div>)}
+          {productList.length == 0 && (
+            <div className="w-full">
+              <p className="text-center py-72">No matching result here</p>
+            </div>
+          )}
           <Pagination className="mt-5">
             <PaginationContent>
               <PaginationItem>
@@ -368,12 +400,14 @@ const Products = () => {
               <PaginationItem>
                 <PaginationNext
                   href={`${web_link}/products?page=${
-                    page * 12 > totalProduct ? page : page + 1
+                    page * productPerPage > totalProduct ? page : page + 1
                   }`}
                   onClick={e => {
                     e.preventDefault();
                     setPage(prevPage =>
-                      prevPage * 12 >= totalProduct ? prevPage : prevPage + 1
+                      prevPage * productPerPage >= totalProduct
+                        ? prevPage
+                        : prevPage + 1
                     );
                   }}
                 />

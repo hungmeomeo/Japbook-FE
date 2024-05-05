@@ -3,7 +3,6 @@
 import React, { useContext, useState } from "react";
 import { web_link } from "@/config_var";
 import { useRouter } from "next/navigation";
-import { getUserId } from "@/authentication";
 import { FilterDispatch } from "@/context/Context";
 import Cookies from "js-cookie";
 

@@ -4,19 +4,14 @@ import Footer from "@/components/Footer";
 import { web_link, be_url } from "@/config_var";
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { getUserToken } from "@/authentication";
-import { UserIdContext } from "@/context/Context";
 
 const HomePage = () => {
-  const uid = useContext(UserIdContext);
-  console.log(uid);
   const [bookStatus, setBookStatus] = useState("Latest"); // Featured | Latest
   const [bookList, setBookList] = useState();
   const [mail, setMail] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userToken = await getUserToken();
         const response = await axios.get(`${be_url}/home`);
         setBookList(response.data);
       } catch (e) {
