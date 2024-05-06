@@ -12,14 +12,14 @@ const Sidebar = ({ children, navItem, setNavItem }) => {
       <aside className="flex flex-row gap-2 md:flex-col border-r-2 self-stretch justify-start md:justify-center">
         <div
           onClick={() => {
-            setNavItem("Wishlist");
+            setNavItem("Order");
           }}
           className={`flex items-center font-medium gap-1 w-fit px-0.5 md:px-10 py-3 cursor-pointer text-[#5C5F6A] ${
-            navItem == "Wishlist" && " bg-[#F6F6F6] rounded-lg text-black"
+            navItem == "Order" && " bg-[#F6F6F6] rounded-lg text-black"
           }`}
         >
-          <img src="/Heart.png" alt="" className="hidden md:inline-block"/>
-          Wishlist
+          <img src="/order.png" alt="" className="hidden md:inline-block"/>
+          Orders
         </div>
         <div
           onClick={() => {

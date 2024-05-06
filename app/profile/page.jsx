@@ -2,7 +2,7 @@
 
 import Detail from "@/components/Detail";
 import Navigation from "@/components/Navigation";
-import SetPassword from "@/components/SetPassword";
+import SetPassword from "@/components/OrderList";
 import ShippingAddress from "@/components/ShippingAddress";
 import Sidebar from "@/components/Sidebar";
 import { useRouter } from "next/navigation";
@@ -10,17 +10,18 @@ import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CustomerOrderList from "@/components/OrderList";
 
 const Profile = () => {
-  const [navItem, setNavItem] = useState("Addr"); // Addr | Pass | Detail
+  const [navItem, setNavItem] = useState("Order"); // Addr | Order | Detail
   let display;
   switch (navItem) {
     case "Addr":
       display = <ShippingAddress />;
       break;
-    // case "Pass":
-    //   display = <SetPassword />;
-    //   break;
+    case "Order":
+      display = <CustomerOrderList />;
+      break;
     // case "Detail":
     //   display = <Detail />;
     //   break;

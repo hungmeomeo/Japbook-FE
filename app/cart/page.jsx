@@ -248,7 +248,13 @@ const Cart = () => {
                       bankCode: paymentMethod,
                     }
                   );
-                  console.log(paymentUrl.data);
+                  const setOrder = await axios.post(
+                    `${be_url}/user/${Cookies.get("userId")}/${
+                      totalPrice + shippingFee + tax
+                    }/setOrder`
+                  );
+
+                  console.log(setOrder.data);
                   router.replace(paymentUrl.data);
                 } catch (e) {
                   console.log(e);
