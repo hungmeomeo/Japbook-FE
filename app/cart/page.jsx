@@ -248,7 +248,8 @@ const Cart = () => {
                       bankCode: paymentMethod,
                     }
                   );
-                  const setOrder = await axios.post(
+                  
+                  const setOrder = await axios.get(
                     `${be_url}/user/${Cookies.get("userId")}/${
                       totalPrice + shippingFee + tax
                     }/setOrder`
