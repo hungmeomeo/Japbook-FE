@@ -7,8 +7,6 @@ import ShippingAddress from "@/components/ShippingAddress";
 import Sidebar from "@/components/Sidebar";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { useSearchParams } from "next/navigation";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomerOrderList from "@/components/OrderList";
 
@@ -29,7 +27,7 @@ const Profile = () => {
   return (
     <>
       <Navigation path={["Ecommerce", "My Account"]} />
-      <Sidebar navItem={navItem} setNavItem={setNavItem}>
+      <Sidebar navItem={navItem} setNavItem={setNavItem} className={"w"} style={{ width: "400px", height:"300px" }}>
         {display}
       </Sidebar>
       <Footer bgColor={"#F6F6F6"}/>

@@ -7,16 +7,20 @@ import { FilterDispatch } from "@/context/Context";
 import Cookies from "js-cookie";
 
 const Navbar = () => {
-  const setBookFilter = useContext(FilterDispatch)
+  const setBookFilter = useContext(FilterDispatch);
   const router = useRouter();
   const [searchBook, setSearchBook] = useState("");
-  const [showNav, setShowNav] = useState(false)
+  const [showNav, setShowNav] = useState(false);
 
   return (
     <nav className="flex items-center py-5 responsive-layout shadow-md justify-between">
       <div className="flex items-center gap-2 font-bold text-2xl">
-        <img src="/logo.png" alt="" />
-        JPRead
+        <img
+          src="https://static.vecteezy.com/system/resources/previews/024/049/007/non_2x/computer-pc-icon-logo-design-vector.jpg"
+          alt=""
+          className="w-12 h-12"
+        />
+        CompMart
       </div>
       <div className="hidden lg:flex xl:flex items-center flex-between w-full">
         <ul className="flex pl-32 font-medium gap-6 grow text-[#5C5F6A]">
@@ -26,14 +30,16 @@ const Navbar = () => {
           <li className="flex cursor-pointer">
             <a href={`${web_link}/products?page=1`}>Products</a>
           </li>
-          <li className="cursor-pointer">About</li>
+          <li className="flex cursor-pointer">
+            <a href={`${web_link}/lap?page=1`}>Lap</a>
+          </li>
           <li className="cursor-pointer">Contact</li>
         </ul>
         <div className="flex items-center gap-2">
           <form
-            onSubmit={e => {
+            onSubmit={(e) => {
               e.preventDefault();
-              router.push('/products')
+              router.push("/products");
               setBookFilter({ type: "SearchBookName", bookName: searchBook });
               setSearchBook("");
             }}
@@ -45,14 +51,14 @@ const Navbar = () => {
               placeholder="Search products"
               className="pl-2 outline-none "
               value={searchBook}
-              onChange={e => {
+              onChange={(e) => {
                 setSearchBook(e.target.value);
               }}
             />
           </form>
           <div
             onClick={async () => {
-              const userId = Cookies.get("userId")
+              const userId = Cookies.get("userId");
               if (userId) router.push("/cart");
               else router.push("/login");
             }}
@@ -72,7 +78,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className="lg:hidden" onClick={() => setShowNav(old => !old)}>
+      <div className="lg:hidden" onClick={() => setShowNav((old) => !old)}>
         <img src="/burger-menu.png" alt="" width={"24px"} />
       </div>
       <div
@@ -97,7 +103,7 @@ const Navbar = () => {
           </li>
           <div className="flex flex-col items-end gap-2">
             <form
-              onSubmit={e => {
+              onSubmit={(e) => {
                 e.preventDefault();
                 setBookFilter({ type: "SearchBookName", bookName: searchBook });
                 setSearchBook("");
@@ -109,7 +115,7 @@ const Navbar = () => {
                 type="text"
                 placeholder="Search products"
                 className="pl-2 outline-none "
-                onChange={e => {
+                onChange={(e) => {
                   setSearchBook(e.target.value);
                 }}
               />
@@ -119,7 +125,7 @@ const Navbar = () => {
                 const userId = Cookies.get("userId");
                 if (userId) router.push("/cart");
                 else router.push("/login");
-                setShowNav(false)
+                setShowNav(false);
               }}
               className="hover:bg-[#F6F6F6] w-10 h-10 flex justify-center items-center rounded-full"
             >

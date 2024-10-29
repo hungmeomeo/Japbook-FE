@@ -29,20 +29,20 @@ const Login = () => {
           <form
             action=""
             className="w-full flex flex-col grow"
-            onSubmit={async e => {
+            onSubmit={async (e) => {
               e.preventDefault();
               console.log("Submit login form to backend ", loginForm);
               try {
-                console.log("inside try block")
+                console.log("inside try block");
                 const sendLogin = await axios.post(`${be_url}/auth/login`, {
                   email: loginForm.email,
                   password: loginForm.password,
                 });
-                console.log(sendLogin)
-                console.log(sendLogin.data.userid)
+                console.log(sendLogin);
+                console.log(sendLogin.data.userid);
                 if (sendLogin.data.success) {
-                  Cookies.set("userId", sendLogin.data.userid)
-                  router.push('/')
+                  Cookies.set("userId", sendLogin.data.userid);
+                  router.push("/");
                 } else {
                   toast({
                     title: "Incorrect email or password",
@@ -53,7 +53,7 @@ const Login = () => {
                   });
                 }
               } catch (e) {
-                console.log(e)
+                console.log(e);
                 toast({
                   title: "Incorrect email or password",
                   description: "Please check your account",
@@ -71,7 +71,7 @@ const Login = () => {
               type="email"
               name="email"
               className="outline-none border-2 focus:border-[#5C5F6A] px-2 rounded-md py-2"
-              onChange={e =>
+              onChange={(e) =>
                 setLoginForm({
                   ...loginForm,
                   [e.target.name]: e.target.value,
@@ -86,14 +86,14 @@ const Login = () => {
                 type={showPwd ? "text" : "password"}
                 name="password"
                 className="outline-none w-full"
-                onChange={e =>
+                onChange={(e) =>
                   setLoginForm({
                     ...loginForm,
                     [e.target.name]: e.target.value,
                   })
                 }
               />
-              <div className="w-6" onClick={() => setShowPwd(old => !old)}>
+              <div className="w-6" onClick={() => setShowPwd((old) => !old)}>
                 {showPwd ? (
                   <img src="/eye.png" alt="" />
                 ) : (

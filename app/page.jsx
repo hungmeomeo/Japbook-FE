@@ -22,28 +22,28 @@ const HomePage = () => {
   }, []);
   return (
     <>
-      <section className="responsive-layout bg-[url('/welcome_img.jpg')] py-10 bg-cover md:bg-none md:bg-[#F6F6F6] flex md:justify-between md:items-center md:py-20">
-        <div className="brightness-100">
-          <h1 className="text-5xl font-bold text-black">
-            Fresh Arrivals Today
+      <section className="responsive-layout bg-[url('/welcome_img.jpg')] py-10 bg-cover md:bg-none md:bg-[#FFCCCC] flex md:justify-between md:items-center md:py-20">
+        <div className="brightness-110 text-center">
+          <h1 className="text-4xl font-extrabold text-red-600 drop-shadow-md animate-pulse">
+            Hot Arrivals Today!
           </h1>
-          <p className="mt-5 font-medium">
-            Discover Our Newest Collection Today.
+          <p className="mt-5 font-semibold text-gray-800">
+            Discover Our Latest and Hottest Collection Now!
           </p>
           <a
             href={`${web_link}/products`}
-            className="group bg-black text-white flex px-6 py-2 rounded-md mt-28 w-fit"
+            className="group bg-red-600 text-white flex px-8 py-3 rounded-full mt-16 w-fit mx-auto hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-105"
           >
-            View Collection{" "}
+            Shop Now{" "}
             <img
               src="/Arrow Right.png"
               alt="arrow"
-              className="relative group-hover:translate-x-2 group-hover:transition-transform transition-transform"
+              className="ml-2 relative group-hover:translate-x-2 transition-transform"
             />
           </a>
         </div>
         <img
-          src="/welcome_img.jpg"
+          src="https://file.hstatic.net/200000722513/file/t10_thu_cu_doi_moi_web_slider_800x400.png"
           alt="books-image"
           className="w-1/2 hidden md:inline-block"
         />
@@ -206,7 +206,7 @@ const HomePage = () => {
           )}
         </div>
       </section>
-      <section className="responsive-layout py-12 bg-[#F6F6F6] flex flex-col lg:flex-row lg:items-center lg:justify-between">
+      <section className="responsive-layout py-12 bg-[#FFE5CC] flex flex-col lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h2 className="font-bold text-2xl">Join Our Newsletter</h2>
           <p className="text-[#5C5F6A] mt-4">
@@ -216,7 +216,7 @@ const HomePage = () => {
         <form
           method="POST"
           className="flex w-1/3 h-12 gap-2 mt-4"
-          onSubmit={async e => {
+          onSubmit={async (e) => {
             e.preventDefault();
             try {
               const noti = await axios.post(`${web_link}/api/send-email`, {
@@ -235,7 +235,7 @@ const HomePage = () => {
             type="text"
             value={mail}
             placeholder="Your email address"
-            onChange={e => {
+            onChange={(e) => {
               setMail(e.target.value);
             }}
             className="grow pl-2 outline-none bg-[#F6F6F6] border-2 px-2 py-0.5 lg:py-1 rounded-md focus:border-[#878A92]"

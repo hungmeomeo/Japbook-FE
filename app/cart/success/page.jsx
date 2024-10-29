@@ -1,7 +1,7 @@
-import Footer from '@/components/Footer';
-import Navigation from '@/components/Navigation'
-import { web_link } from '@/config_var';
-import React from 'react'
+import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
+import { web_link } from "@/config_var";
+import React from "react";
 
 const page = () => {
   return (
@@ -10,7 +10,7 @@ const page = () => {
         bgColor={"#D5E5D7"}
         path={["Ecommerce", "Successful Order"]}
       />
-      <div className="flex flex-col items-center mx-auto my-20 gap-10">
+      <div className="flex flex-col items-center mx-auto my-25 gap-10">
         <img src="/Package.png" alt="" />
         <h1 className="font-bold text-3xl">Thank you for shopping</h1>
         <p className="text-ceter text-[#5C5F6A]">
@@ -28,9 +28,9 @@ const page = () => {
           />
         </a>
       </div>
-      <Footer bgColor={"#F6F6F6"}/>
+      <Footer bgColor={"#F6F6F6"} />
     </>
   );
-}
+};
 
-export default page
+export default page;

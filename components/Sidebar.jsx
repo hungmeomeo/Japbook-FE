@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Divider } from "@chakra-ui/react";
 import Cookies from "js-cookie";
@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const Sidebar = ({ children, navItem, setNavItem }) => {
-  const router = useRouter()
+  const router = useRouter();
   return (
-    <div className="responsive-layout flex flex-col md:flex-row mt-16 md:h-[400px]">
+    <div className="responsive-layout flex flex-col md:flex-row mt-20 md:h-[650px]">
       <aside className="flex flex-row gap-2 md:flex-col border-r-2 self-stretch justify-start md:justify-center">
         <div
           onClick={() => {
@@ -18,7 +18,7 @@ const Sidebar = ({ children, navItem, setNavItem }) => {
             navItem == "Order" && " bg-[#F6F6F6] rounded-lg text-black"
           }`}
         >
-          <img src="/order.png" alt="" className="hidden md:inline-block"/>
+          <img src="/order.png" alt="" className="hidden md:inline-block" />
           Orders
         </div>
         <div
@@ -29,7 +29,7 @@ const Sidebar = ({ children, navItem, setNavItem }) => {
             navItem == "Addr" && " bg-[#F6F6F6] rounded-lg text-black"
           }`}
         >
-          <img src="/Delivery.png" alt="" className="hidden md:inline-block"/>
+          <img src="/Delivery.png" alt="" className="hidden md:inline-block" />
           Address
         </div>
         {/* <div
@@ -57,23 +57,21 @@ const Sidebar = ({ children, navItem, setNavItem }) => {
         <div
           onClick={async () => {
             try {
-              Cookies.remove("userId")
-              if (!Cookies.get("userId")) router.push('/login')
+              Cookies.remove("userId");
+              if (!Cookies.get("userId")) router.push("/login");
+            } catch (e) {
+              console.log(e);
             }
-            catch(e) {
-              console.log(e)
-            }
-            
           }}
           className={`flex items-center font-medium gap-1 px-0.5 md:px-10 py-3 cursor-pointer text-[#5C5F6A] ${
             navItem == "Logout" && " bg-[#F6F6F6] rounded-lg text-black"
           }`}
         >
-          <img src="/Logout.png" alt="" className="hidden md:inline-block"/>
+          <img src="/Logout.png" alt="" className="hidden md:inline-block" />
           Logout
         </div>
       </aside>
-      <Divider className="md:hidden"/>
+      <Divider className="md:hidden" />
       {children}
     </div>
   );
