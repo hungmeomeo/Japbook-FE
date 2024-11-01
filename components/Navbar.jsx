@@ -13,7 +13,7 @@ const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
 
   return (
-    <nav className="flex items-center py-5 responsive-layout shadow-md justify-between">
+    <nav className="flex items-center py-5 responsive-layout shadow-md justify-between ">
       <div className="flex items-center gap-2 font-bold text-2xl">
         <img
           src="https://static.vecteezy.com/system/resources/previews/024/049/007/non_2x/computer-pc-icon-logo-design-vector.jpg"

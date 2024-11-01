@@ -27,12 +27,11 @@ import {
 import { be_url, web_link } from "@/config_var";
 import axios from "axios";
 
-
 const Products = () => {
   const filter = useContext(FilterState);
-  const dispatch = useContext(FilterDispatch)
+  const dispatch = useContext(FilterDispatch);
   const [page, setPage] = useState(1);
-  const [totalProduct, setTotalProduct] = useState(0)
+  const [totalProduct, setTotalProduct] = useState(0);
   const [sort, setSort] = useState({ kind: "price", order: "asc" }); // Kind: name | price, order: asc | desc
   const [productList, setProductList] = useState([]);
   const productPerPage = 9;
@@ -40,20 +39,20 @@ const Products = () => {
   let mergeArray = null;
 
   mergeArray = [].concat(filter.genre);
-  
+
   useEffect(() => {
-    setPage(1)
+    setPage(1);
     const getFilterProducts = async () => {
       console.log("useEffect filter is called");
       try {
         const fetchFilterProducts = await axios.get(
           `${be_url}/filterProducts?name=${filter.name}&price_start=${filter.priceRange[0]}&price_end=${filter.priceRange[1]}&genre_type=${filter.genre}&order=${sort.order}&page=1`
         );
-        console.log(fetchFilterProducts)
-        const lastEle = fetchFilterProducts.data.pop()
-        console.log(lastEle)
+        console.log(fetchFilterProducts);
+        const lastEle = fetchFilterProducts.data.pop();
+        console.log(lastEle);
         setProductList(fetchFilterProducts.data);
-        setTotalProduct(lastEle.totalFilteredBook)
+        setTotalProduct(lastEle.totalFilteredBook);
       } catch (e) {
         console.log(e);
       }
@@ -80,13 +79,10 @@ const Products = () => {
     getFilterProducts();
   }, [page]);
 
-
-  console.log("Total Product: ", totalProduct)
-  console.log("Product/page: ", productPerPage)
-  console.log("Final page: ", finalPage)
-  console.log("Current page: ", page)
-
-
+  console.log("Total Product: ", totalProduct);
+  console.log("Product/page: ", productPerPage);
+  console.log("Final page: ", finalPage);
+  console.log("Current page: ", page);
 
   return (
     <>
@@ -96,7 +92,7 @@ const Products = () => {
         <main className="w-full">
           <p className="font-semibold">Applied Filters:</p>
           <div className="w-full flex flex-wrap gap-2 mt-4">
-            {mergeArray.map(ele => (
+            {mergeArray.map((ele) => (
               <Tag
                 key={uuid()}
                 borderRadius="full"
@@ -138,7 +134,7 @@ const Products = () => {
               of {totalProduct} results
             </p>
             <Select
-              onValueChange={e => {
+              onValueChange={(e) => {
                 switch (e) {
                   // case "name-asc":
                   //   setSort({ kind: "name", order: "asc" });
@@ -172,7 +168,7 @@ const Products = () => {
           </div>
           <div className="grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-20">
             {productList.length ? (
-              productList.map(book => (
+              productList.map((book) => (
                 <div key={uuid()} className="flex justify-center">
                   <Card
                     productId={book.id}
@@ -200,9 +196,9 @@ const Products = () => {
                   //   page > 1 ? page - 1 : page
                   // }`}
                   href=""
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
-                    setPage(oldPage =>
+                    setPage((oldPage) =>
                       oldPage - 1 > 0 ? oldPage - 1 : oldPage
                     );
                     // console.log("This prev is clicked")
@@ -213,7 +209,7 @@ const Products = () => {
               <PaginationItem>
                 <PaginationLink
                   href={`${web_link}/products?page=1`}
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     setPage(1);
                     // console.log("This prev is clicked")
@@ -237,7 +233,7 @@ const Products = () => {
                     <PaginationItem>
                       <PaginationLink
                         href={`${web_link}/products?page=2`}
-                        onClick={e => {
+                        onClick={(e) => {
                           e.preventDefault();
                           setPage(2);
                           // console.log("This prev is clicked")
@@ -252,7 +248,7 @@ const Products = () => {
                     <PaginationItem>
                       <PaginationLink
                         href={`${web_link}/products?page=3`}
-                        onClick={e => {
+                        onClick={(e) => {
                           e.preventDefault();
                           setPage(3);
                           // console.log("This prev is clicked")
@@ -267,7 +263,7 @@ const Products = () => {
                     <PaginationItem>
                       <PaginationLink
                         href={`${web_link}/products?page=4`}
-                        onClick={e => {
+                        onClick={(e) => {
                           e.preventDefault();
                           setPage(4);
                           // console.log("This prev is clicked")
@@ -286,9 +282,9 @@ const Products = () => {
                     <PaginationItem>
                       <PaginationLink
                         href={`${web_link}/products?page=${page - 1}`}
-                        onClick={e => {
+                        onClick={(e) => {
                           e.preventDefault();
-                          setPage(prevPage => prevPage - 1);
+                          setPage((prevPage) => prevPage - 1);
                           // console.log("This prev is clicked")
                         }}
                       >
@@ -300,9 +296,9 @@ const Products = () => {
                     <PaginationItem>
                       <PaginationLink
                         href={`${web_link}/products?page=${page}`}
-                        onClick={e => {
+                        onClick={(e) => {
                           e.preventDefault();
-                          setPage(prevPage => prevPage);
+                          setPage((prevPage) => prevPage);
                           // console.log("This prev is clicked")
                         }}
                         isActive
@@ -315,9 +311,9 @@ const Products = () => {
                     <PaginationItem>
                       <PaginationLink
                         href={`${web_link}/products?page=${page + 1}`}
-                        onClick={e => {
+                        onClick={(e) => {
                           e.preventDefault();
-                          setPage(prevPage => prevPage + 1);
+                          setPage((prevPage) => prevPage + 1);
                           // console.log("This prev is clicked")
                         }}
                       >
@@ -333,7 +329,7 @@ const Products = () => {
                   <PaginationItem>
                     <PaginationLink
                       href={`${web_link}/products?page=${finalPage - 3}`}
-                      onClick={e => {
+                      onClick={(e) => {
                         e.preventDefault();
                         setPage(finalPage - 3);
                         // console.log("This prev is clicked")
@@ -346,7 +342,7 @@ const Products = () => {
                   <PaginationItem>
                     <PaginationLink
                       href={`${web_link}/products?page=${finalPage - 2}`}
-                      onClick={e => {
+                      onClick={(e) => {
                         e.preventDefault();
                         setPage(finalPage - 2);
                         // console.log("This prev is clicked")
@@ -359,7 +355,7 @@ const Products = () => {
                   <PaginationItem>
                     <PaginationLink
                       href={`${web_link}/products?page=${finalPage - 1}`}
-                      onClick={e => {
+                      onClick={(e) => {
                         e.preventDefault();
                         setPage(finalPage - 1);
                         // console.log("This prev is clicked")
@@ -384,7 +380,7 @@ const Products = () => {
                 <PaginationItem>
                   <PaginationLink
                     href={`${web_link}/products?page=${finalPage}`}
-                    onClick={e => {
+                    onClick={(e) => {
                       e.preventDefault();
                       setPage(finalPage);
                       // console.log("This prev is clicked")
@@ -402,9 +398,9 @@ const Products = () => {
                   href={`${web_link}/products?page=${
                     page * productPerPage > totalProduct ? page : page + 1
                   }`}
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
-                    setPage(prevPage =>
+                    setPage((prevPage) =>
                       prevPage * productPerPage >= totalProduct
                         ? prevPage
                         : prevPage + 1

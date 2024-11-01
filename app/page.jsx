@@ -22,17 +22,17 @@ const HomePage = () => {
   }, []);
   return (
     <>
-      <section className="responsive-layout bg-[url('/welcome_img.jpg')] py-10 bg-cover md:bg-none md:bg-[#FFCCCC] flex md:justify-between md:items-center md:py-20">
+      <section className="responsive-layout bg-[url('/welcome_img.jpg')] py-10 bg-cover md:bg-none md:bg-[#F6F6F6] flex md:justify-between md:items-center md:py-20">
         <div className="brightness-110 text-center">
-          <h1 className="text-4xl font-extrabold text-red-600 drop-shadow-md animate-pulse">
+          <h1 className="text-4xl font-extrabold text-black drop-shadow-md animate-pulse">
             Hot Arrivals Today!
           </h1>
-          <p className="mt-5 font-semibold text-gray-800">
+          <p className="mt-5 font-semibold text-black">
             Discover Our Latest and Hottest Collection Now!
           </p>
           <a
             href={`${web_link}/products`}
-            className="group bg-red-600 text-white flex px-8 py-3 rounded-full mt-16 w-fit mx-auto hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-105"
+            className="group bg-black text-white flex px-8 py-3 rounded-full mt-16 w-fit mx-auto hover:bg-[#333333] transition duration-300 ease-in-out transform hover:scale-105"
           >
             Shop Now{" "}
             <img
@@ -48,7 +48,7 @@ const HomePage = () => {
           className="w-1/2 hidden md:inline-block"
         />
       </section>
-      <section className="responsive-layout flex flex-col items-center py-10 md:py-20 md:flex md:flex-row xl:p-40 md:justify-between gap-10">
+      <section className="responsive-layout flex flex-col items-center py-10 md:py-15 md:flex md:flex-row xl:p-20 md:justify-between gap-10">
         <div className="md:w-1/3 flex flex-col items-center">
           <div className="rounded-full bg-[#F6F6F6] w-12 h-12 flex justify-center items-center">
             <img src="/shipping.png" alt="" className="w-6" />
@@ -79,7 +79,7 @@ const HomePage = () => {
           </p>
         </div>
       </section>
-      <section className="responsive-layout pb-16 flex flex-col items-center">
+      <section className="responsive-layout flex flex-col items-center">
         <h3 className="text-[#5C5F6A] font-medium">SHOP NOW</h3>
         <h2 className="font-semibold text-xl">Best Selling</h2>
         <div className="responsive-card-display">
@@ -117,8 +117,8 @@ const HomePage = () => {
           )}
         </div>
       </section>
-      <section className="responsive-layout flex justify-between bg-[#F6F6F6]">
-        <div className="my-16">
+      <section className="responsive-layout flex justify-center items-center">
+        <div className="my-16 text-center">
           <h2 className="font-bold text-2xl">
             Browse Our Light Novel Paradise
           </h2>
@@ -128,7 +128,7 @@ const HomePage = () => {
           </p>
           <a
             href={`${web_link}/products`}
-            className="bg-black text-white flex px-6 py-2 rounded-md w-fit group cursor-pointer"
+            className="bg-black text-white flex px-6 py-2 rounded-md w-fit group cursor-pointer mx-auto"
           >
             Start Browsing{" "}
             <img
@@ -138,74 +138,8 @@ const HomePage = () => {
             />
           </a>
         </div>
-        <img
-          src="https://i0.wp.com/jaybarnson.com/wp-content/uploads/2022/04/RascalDoesNotDream.jpg?fit=481%2C671&ssl=1"
-          alt=""
-          className="h-80 hidden md:block"
-        />
       </section>
-      <section className="responsive-layout flex flex-col items-center py-40">
-        <div className="flex gap-4">
-          <p
-            onClick={() => {
-              setBookStatus("Featured");
-            }}
-            className={`font-semibold cursor-pointer ${
-              bookStatus === "Featured"
-                ? "border-2 rounded-full px-2"
-                : "text-[#5C5F6A]"
-            }`}
-          >
-            Featured
-          </p>
-          <p
-            onClick={() => {
-              setBookStatus("Latest");
-            }}
-            className={`font-semibold cursor-pointer ${
-              bookStatus === "Latest"
-                ? "border-2 rounded-full px-2"
-                : "text-[#5C5F6A]"
-            }`}
-          >
-            Latest
-          </p>
-        </div>
-        <div className="responsive-card-display">
-          {bookList && (
-            <>
-              <Card
-                productId={bookList[4].id}
-                productName={bookList[4].name}
-                isInStock={bookList[4].status === "InStock" ? true : false}
-                price={bookList[4].price}
-                imgUrl={bookList[4].image}
-              />
-              <Card
-                productId={bookList[5].id}
-                productName={bookList[5].name}
-                isInStock={bookList[5].status === "InStock" ? true : false}
-                price={bookList[5].price}
-                imgUrl={bookList[5].image}
-              />
-              <Card
-                productId={bookList[6].id}
-                productName={bookList[6].name}
-                isInStock={bookList[6].status === "InStock" ? true : false}
-                price={bookList[6].price}
-                imgUrl={bookList[6].image}
-              />
-              <Card
-                productId={bookList[7].id}
-                productName={bookList[7].name}
-                isInStock={bookList[7].status === "InStock" ? true : false}
-                price={bookList[7].price}
-                imgUrl={bookList[7].image}
-              />
-            </>
-          )}
-        </div>
-      </section>
+
       <section className="responsive-layout py-12 bg-[#FFE5CC] flex flex-col lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h2 className="font-bold text-2xl">Join Our Newsletter</h2>
